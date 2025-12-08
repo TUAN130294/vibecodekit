@@ -1,0 +1,13 @@
+node_modules/
+dist/
+logs/
+coverage/
+.env*
+*.log
+.DS_Store
+*.pyc
+__pycache__/
+/.vercel
+/.turbo
+/.next
+
