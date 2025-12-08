@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useLanguage } from './LanguageProvider';
 
 interface PromptOptions {
   featureType: string;
@@ -13,6 +14,9 @@ interface PromptOptions {
 }
 
 export default function PromptGenerator() {
+  const { language } = useLanguage();
+  const isVi = language === 'vi';
+
   const [options, setOptions] = useState<PromptOptions>({
     featureType: '',
     featureName: '',
@@ -24,10 +28,41 @@ export default function PromptGenerator() {
   });
 
   const [generatedPrompt, setGeneratedPrompt] = useState('');
+  const [copied, setCopied] = useState(false);
+
+  // Labels
+  const labels = {
+    featureType: isVi ? 'Loại tính năng' : 'Feature Type',
+    selectType: isVi ? 'Chọn loại tính năng...' : 'Select feature type...',
+    featureName: isVi ? 'Tên tính năng' : 'Feature Name',
+    featureNamePlaceholder: isVi ? 'VD: User Profile Card, Product API, Revenue Dashboard' : 'e.g., User Profile Card, Product API, Revenue Dashboard',
+    description: isVi ? 'Mô tả chi tiết' : 'Description',
+    descriptionPlaceholder: isVi ? 'Mô tả chi tiết những gì bạn muốn xây dựng... Bao gồm yêu cầu, chức năng và các chi tiết cụ thể.' : 'Describe what you want to build... Include requirements, functionality, and any specific details.',
+    includeTests: isVi ? 'Bao gồm Tests' : 'Include Tests',
+    typeScriptStrict: isVi ? 'TypeScript Strict' : 'TypeScript Strict',
+    accessibility: isVi ? 'Hỗ trợ truy cập (a11y)' : 'Accessibility (a11y)',
+    documentation: isVi ? 'Viết tài liệu' : 'Documentation',
+    generateBtn: isVi ? 'Tạo Prompt ✨' : 'Generate Prompt ✨',
+    generatedTitle: isVi ? 'Prompt đã tạo' : 'Generated Prompt',
+    copy: isVi ? 'Sao chép' : 'Copy',
+    copied: isVi ? 'Đã sao chép!' : 'Copied!',
+    fillRequired: isVi ? '⚠️ Vui lòng điền Loại tính năng, Tên và Mô tả trước.' : '⚠️ Please fill in Feature Type, Feature Name, and Description first.',
+  };
+
+  const featureTypes = [
+    { value: 'component', label: isVi ? 'React Component' : 'React Component' },
+    { value: 'page', label: isVi ? 'Trang Next.js' : 'Next.js Page' },
+    { value: 'api', label: isVi ? 'API Endpoint (REST)' : 'API Endpoint (REST)' },
+    { value: 'graphql', label: isVi ? 'GraphQL Resolver' : 'GraphQL Resolver' },
+    { value: 'crud', label: isVi ? 'Tính năng CRUD đầy đủ' : 'Full CRUD Feature' },
+    { value: 'bot', label: isVi ? 'AI Chatbot' : 'AI Chatbot' },
+    { value: 'automation', label: isVi ? 'Script Tự động hóa' : 'Automation Script' },
+    { value: 'dashboard', label: isVi ? 'Dashboard BI' : 'BI Dashboard' },
+  ];
 
   const generatePrompt = () => {
     if (!options.featureType || !options.featureName || !options.description) {
-      setGeneratedPrompt('⚠️ Please fill in Feature Type, Feature Name, and Description first.');
+      setGeneratedPrompt(labels.fillRequired);
       return;
     }
 
@@ -232,127 +267,125 @@ ${options.includeTests ? `- Tests: tests/dashboard/${options.featureName.toLower
 Include loading states, error boundaries, empty states, and data freshness indicators.`,
     };
 
-    const prompt = templates[options.featureType] || 'Please select a feature type first.';
+    const prompt = templates[options.featureType] || labels.fillRequired;
     setGeneratedPrompt(prompt);
   };
 
   const copyToClipboard = () => {
     navigator.clipboard.writeText(generatedPrompt);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
   };
 
   return (
-    <div className="bg-gradient-to-br from-blue-50 to-purple-50 rounded-2xl p-8 border-2 border-blue-200">
-      <div className="space-y-6">
-        {/* Feature Type */}
-        <div>
-          <label className="block text-sm font-semibold text-gray-700 mb-2">Feature Type</label>
-          <select
-            value={options.featureType}
-            onChange={(e) => setOptions({ ...options, featureType: e.target.value })}
-            className="w-full px-4 py-3 rounded-xl border-2 border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition-all"
-          >
-            <option value="">Select feature type...</option>
-            <option value="component">React Component</option>
-            <option value="page">Next.js Page</option>
-            <option value="api">API Endpoint (REST)</option>
-            <option value="graphql">GraphQL Resolver</option>
-            <option value="crud">Full CRUD Feature</option>
-            <option value="bot">AI Chatbot</option>
-            <option value="automation">Automation Script</option>
-            <option value="dashboard">BI Dashboard</option>
-          </select>
-        </div>
-
-        {/* Feature Name */}
-        <div>
-          <label className="block text-sm font-semibold text-gray-700 mb-2">Feature Name</label>
-          <input
-            type="text"
-            value={options.featureName}
-            onChange={(e) => setOptions({ ...options, featureName: e.target.value })}
-            placeholder="e.g., User Profile Card, Product API, Revenue Dashboard"
-            className="w-full px-4 py-3 rounded-xl border-2 border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition-all"
-          />
-        </div>
-
-        {/* Description */}
-        <div>
-          <label className="block text-sm font-semibold text-gray-700 mb-2">Description</label>
-          <textarea
-            value={options.description}
-            onChange={(e) => setOptions({ ...options, description: e.target.value })}
-            rows={4}
-            placeholder="Describe what you want to build... Include requirements, functionality, and any specific details."
-            className="w-full px-4 py-3 rounded-xl border-2 border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition-all resize-none"
-          />
-        </div>
-
-        {/* Options */}
-        <div className="grid md:grid-cols-2 gap-4">
-          <label className="flex items-center gap-3 px-4 py-3 bg-white rounded-xl border-2 border-gray-200 cursor-pointer hover:border-blue-400 transition-colors">
-            <input
-              type="checkbox"
-              checked={options.includeTests}
-              onChange={(e) => setOptions({ ...options, includeTests: e.target.checked })}
-              className="w-5 h-5 text-blue-600"
-            />
-            <span className="text-sm font-medium text-gray-700">Include Tests</span>
-          </label>
-          <label className="flex items-center gap-3 px-4 py-3 bg-white rounded-xl border-2 border-gray-200 cursor-pointer hover:border-blue-400 transition-colors">
-            <input
-              type="checkbox"
-              checked={options.typeScriptStrict}
-              onChange={(e) => setOptions({ ...options, typeScriptStrict: e.target.checked })}
-              className="w-5 h-5 text-blue-600"
-            />
-            <span className="text-sm font-medium text-gray-700">TypeScript Strict</span>
-          </label>
-          <label className="flex items-center gap-3 px-4 py-3 bg-white rounded-xl border-2 border-gray-200 cursor-pointer hover:border-blue-400 transition-colors">
-            <input
-              type="checkbox"
-              checked={options.accessibility}
-              onChange={(e) => setOptions({ ...options, accessibility: e.target.checked })}
-              className="w-5 h-5 text-blue-600"
-            />
-            <span className="text-sm font-medium text-gray-700">Accessibility (a11y)</span>
-          </label>
-          <label className="flex items-center gap-3 px-4 py-3 bg-white rounded-xl border-2 border-gray-200 cursor-pointer hover:border-blue-400 transition-colors">
-            <input
-              type="checkbox"
-              checked={options.documentation}
-              onChange={(e) => setOptions({ ...options, documentation: e.target.checked })}
-              className="w-5 h-5 text-blue-600"
-            />
-            <span className="text-sm font-medium text-gray-700">Documentation</span>
-          </label>
-        </div>
-
-        {/* Generate Button */}
-        <button
-          onClick={generatePrompt}
-          className="w-full px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl font-semibold hover:shadow-xl hover:-translate-y-0.5 transition-all"
+    <div className="space-y-6">
+      {/* Feature Type */}
+      <div>
+        <label className="block text-sm font-semibold text-gray-700 mb-2">{labels.featureType}</label>
+        <select
+          value={options.featureType}
+          onChange={(e) => setOptions({ ...options, featureType: e.target.value })}
+          className="w-full px-4 py-3 rounded-xl border-2 border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition-all bg-white"
         >
-          Generate Prompt ✨
-        </button>
-
-        {/* Generated Prompt Preview */}
-        {generatedPrompt && (
-          <div className="bg-white rounded-xl p-6 border-2 border-gray-200">
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="font-semibold text-gray-900">Generated Prompt</h3>
-              <button
-                onClick={copyToClipboard}
-                className="px-3 py-1 bg-gray-100 hover:bg-gray-200 rounded-lg text-sm font-medium transition-colors"
-              >
-                Copy
-              </button>
-            </div>
-            <div className="bg-gray-50 rounded-lg p-4 font-mono text-sm text-gray-700 leading-relaxed whitespace-pre-wrap max-h-96 overflow-y-auto">
-              {generatedPrompt}
-            </div>
-          </div>
-        )}
+          <option value="">{labels.selectType}</option>
+          {featureTypes.map((type) => (
+            <option key={type.value} value={type.value}>{type.label}</option>
+          ))}
+        </select>
       </div>
+
+      {/* Feature Name */}
+      <div>
+        <label className="block text-sm font-semibold text-gray-700 mb-2">{labels.featureName}</label>
+        <input
+          type="text"
+          value={options.featureName}
+          onChange={(e) => setOptions({ ...options, featureName: e.target.value })}
+          placeholder={labels.featureNamePlaceholder}
+          className="w-full px-4 py-3 rounded-xl border-2 border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition-all"
+        />
+      </div>
+
+      {/* Description */}
+      <div>
+        <label className="block text-sm font-semibold text-gray-700 mb-2">{labels.description}</label>
+        <textarea
+          value={options.description}
+          onChange={(e) => setOptions({ ...options, description: e.target.value })}
+          rows={4}
+          placeholder={labels.descriptionPlaceholder}
+          className="w-full px-4 py-3 rounded-xl border-2 border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition-all resize-none"
+        />
+      </div>
+
+      {/* Options */}
+      <div className="grid md:grid-cols-2 gap-4">
+        <label className="flex items-center gap-3 px-4 py-3 bg-gray-50 rounded-xl border-2 border-gray-200 cursor-pointer hover:border-blue-400 transition-colors">
+          <input
+            type="checkbox"
+            checked={options.includeTests}
+            onChange={(e) => setOptions({ ...options, includeTests: e.target.checked })}
+            className="w-5 h-5 text-blue-600 rounded"
+          />
+          <span className="text-sm font-medium text-gray-700">{labels.includeTests}</span>
+        </label>
+        <label className="flex items-center gap-3 px-4 py-3 bg-gray-50 rounded-xl border-2 border-gray-200 cursor-pointer hover:border-blue-400 transition-colors">
+          <input
+            type="checkbox"
+            checked={options.typeScriptStrict}
+            onChange={(e) => setOptions({ ...options, typeScriptStrict: e.target.checked })}
+            className="w-5 h-5 text-blue-600 rounded"
+          />
+          <span className="text-sm font-medium text-gray-700">{labels.typeScriptStrict}</span>
+        </label>
+        <label className="flex items-center gap-3 px-4 py-3 bg-gray-50 rounded-xl border-2 border-gray-200 cursor-pointer hover:border-blue-400 transition-colors">
+          <input
+            type="checkbox"
+            checked={options.accessibility}
+            onChange={(e) => setOptions({ ...options, accessibility: e.target.checked })}
+            className="w-5 h-5 text-blue-600 rounded"
+          />
+          <span className="text-sm font-medium text-gray-700">{labels.accessibility}</span>
+        </label>
+        <label className="flex items-center gap-3 px-4 py-3 bg-gray-50 rounded-xl border-2 border-gray-200 cursor-pointer hover:border-blue-400 transition-colors">
+          <input
+            type="checkbox"
+            checked={options.documentation}
+            onChange={(e) => setOptions({ ...options, documentation: e.target.checked })}
+            className="w-5 h-5 text-blue-600 rounded"
+          />
+          <span className="text-sm font-medium text-gray-700">{labels.documentation}</span>
+        </label>
+      </div>
+
+      {/* Generate Button */}
+      <button
+        onClick={generatePrompt}
+        className="w-full px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl font-semibold hover:shadow-xl hover:-translate-y-0.5 transition-all"
+      >
+        {labels.generateBtn}
+      </button>
+
+      {/* Generated Prompt Preview */}
+      {generatedPrompt && (
+        <div className="bg-gray-50 rounded-xl p-6 border-2 border-gray-200">
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="font-semibold text-gray-900">{labels.generatedTitle}</h3>
+            <button
+              onClick={copyToClipboard}
+              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${copied
+                  ? 'bg-green-100 text-green-700'
+                  : 'bg-white hover:bg-gray-100 border'
+                }`}
+            >
+              {copied ? labels.copied : labels.copy}
+            </button>
+          </div>
+          <div className="bg-white rounded-lg p-4 font-mono text-sm text-gray-700 leading-relaxed whitespace-pre-wrap max-h-96 overflow-y-auto border">
+            {generatedPrompt}
+          </div>
+        </div>
+      )}
     </div>
   );
 }

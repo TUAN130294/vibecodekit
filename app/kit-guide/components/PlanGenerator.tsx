@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useLanguage } from './LanguageProvider';
 
 interface PlanOptions {
   projectName: string;
@@ -11,6 +12,9 @@ interface PlanOptions {
 }
 
 export default function PlanGenerator() {
+  const { language } = useLanguage();
+  const isVi = language === 'vi';
+
   const [options, setOptions] = useState<PlanOptions>({
     projectName: '',
     scope: '',
@@ -20,6 +24,38 @@ export default function PlanGenerator() {
   });
 
   const [generatedPlan, setGeneratedPlan] = useState('');
+  const [copied, setCopied] = useState(false);
+
+  // Labels
+  const labels = {
+    projectName: isVi ? 'Tên Dự án/Tính năng' : 'Project/Feature Name',
+    projectNamePlaceholder: isVi ? 'VD: Hệ thống Quản lý SOP' : 'e.g., SOP Management System',
+    projectScope: isVi ? 'Phạm vi Dự án' : 'Project Scope',
+    projectScopePlaceholder: isVi ? 'Mô tả phạm vi dự án, tính năng và yêu cầu của bạn...' : 'Describe your project scope, features, and requirements...',
+    teamSize: isVi ? 'Quy mô Team' : 'Team Size',
+    timeline: isVi ? 'Thời gian' : 'Timeline',
+    techStack: isVi ? 'Công nghệ ưu tiên' : 'Tech Stack Preferences',
+    generateBtn: isVi ? 'Tạo Kế hoạch Triển khai 📋' : 'Generate Implementation Plan 📋',
+    generatedTitle: isVi ? 'Kế hoạch Triển khai' : 'Implementation Plan',
+    download: isVi ? 'Tải xuống' : 'Download',
+    copy: isVi ? 'Sao chép' : 'Copy',
+    copied: isVi ? 'Đã sao chép!' : 'Copied!',
+    fillRequired: isVi ? '⚠️ Vui lòng điền Tên dự án và Phạm vi trước.' : '⚠️ Please fill in Project Name and Project Scope first.',
+  };
+
+  const teamSizes = [
+    { value: '1 developer', label: isVi ? '1 lập trình viên' : '1 developer' },
+    { value: '2 developers', label: isVi ? '2 lập trình viên' : '2 developers' },
+    { value: '3-5 developers', label: isVi ? '3-5 lập trình viên' : '3-5 developers' },
+    { value: '6-10 developers', label: isVi ? '6-10 lập trình viên' : '6-10 developers' },
+  ];
+
+  const timelines = [
+    { value: '1-2 weeks', label: isVi ? '1-2 tuần' : '1-2 weeks' },
+    { value: '1 month', label: isVi ? '1 tháng' : '1 month' },
+    { value: '2-3 months', label: isVi ? '2-3 tháng' : '2-3 months' },
+    { value: '3-6 months', label: isVi ? '3-6 tháng' : '3-6 months' },
+  ];
 
   const toggleTech = (tech: string) => {
     setOptions({
@@ -32,7 +68,7 @@ export default function PlanGenerator() {
 
   const generatePlan = () => {
     if (!options.projectName || !options.scope) {
-      setGeneratedPlan('⚠️ Please fill in Project Name and Project Scope first.');
+      setGeneratedPlan(labels.fillRequired);
       return;
     }
 
@@ -86,24 +122,6 @@ ${options.techStack.includes('GraphQL') ? '- [ ] Set up Apollo Server and GraphQ
 
 ### 2.2 Main Features
 Based on your scope: "${options.scope}"
-
-${options.scope.toLowerCase().includes('sop') ? `
-SOP Management Features:
-- [ ] SOP list view with filtering and search
-- [ ] SOP detail view with phase tracking
-- [ ] SOP create/edit forms with validation
-- [ ] Deadline management and alerts
-- [ ] Phase status tracking (Not Started, In Progress, Completed)
-` : ''}
-
-${options.scope.toLowerCase().includes('dashboard') || options.scope.toLowerCase().includes('bi') || options.scope.toLowerCase().includes('analytics') ? `
-BI Dashboard Features:
-- [ ] KPI cards with real-time data
-- [ ] Revenue charts (line, bar, pie)
-- [ ] Inventory alerts and notifications
-- [ ] Date range filters and export functionality
-- [ ] Real-time data updates
-` : ''}
 
 ### 2.3 State Management
 - [ ] Set up global state (Context API or Redux)
@@ -188,8 +206,6 @@ REST API:
 - [ ] Implement semantic search
 
 ### 4.3 Bot Features
-${options.scope.toLowerCase().includes('summarization') ? '- [ ] Implement text summarization' : ''}
-${options.scope.toLowerCase().includes('translation') ? '- [ ] Implement translation feature' : ''}
 - [ ] Add retry logic for API failures (🔒 PROTECTED)
 - [ ] Implement response validation (🔒 PROTECTED)
 - [ ] Add token counting and cost control
@@ -212,48 +228,10 @@ ${options.scope.toLowerCase().includes('translation') ? '- [ ] Implement transla
 **⚠️ CRITICAL:** Mark all bot logic with 🔒 PROTECTED markers to prevent AI from breaking it later.`);
     }
 
-    // Phase 5: Automation (if applicable)
-    if (hasAutomation) {
-      phases.push(`## Phase 5: Automation & Background Jobs (Week 3-4)
+    // Phase 5: Testing & Quality
+    phases.push(`## Phase ${hasAI ? '5' : hasAutomation ? '5' : '4'}: Testing & Quality Assurance
 
-### 5.1 Python Workers
-- [ ] Set up Python virtual environment
-- [ ] Create worker scripts for background tasks
-- [ ] Implement retry logic and error handling
-- [ ] Add logging and monitoring
-
-### 5.2 n8n Workflows
-- [ ] Design automation workflows
-- [ ] Set up triggers (schedule, webhook, manual)
-- [ ] Implement data transformations
-- [ ] Add error notifications
-
-### 5.3 Scheduled Tasks
-${options.scope.toLowerCase().includes('download') || options.scope.toLowerCase().includes('upload') ? `
-- [ ] Auto-download from external sources
-- [ ] Data parsing and validation
-- [ ] Upload to database
-- [ ] Send completion notifications
-` : `
-- [ ] Daily/hourly scheduled jobs
-- [ ] Data synchronization
-- [ ] Report generation
-- [ ] Cleanup tasks
-`}
-
-**Deliverables:**
-- Working automation scripts
-- n8n workflows
-- Scheduled jobs
-- Error handling and monitoring
-
-**Time Estimate:** 5-7 days for ${options.teamSize}`);
-    }
-
-    // Phase 6: Testing & Quality
-    phases.push(`## Phase 6: Testing & Quality Assurance (Week 4)
-
-### 6.1 Testing
+### Testing
 - [ ] Write unit tests for components (React Testing Library)
 - [ ] Write unit tests for services (Jest)
 - [ ] Create API integration tests
@@ -261,19 +239,19 @@ ${hasFrontend ? '- [ ] Write E2E tests with Playwright' : ''}
 ${hasAI ? '- [ ] Test all protected bot logic thoroughly' : ''}
 - [ ] Achieve 80%+ code coverage
 
-### 6.2 Code Quality
+### Code Quality
 - [ ] Run ESLint and fix all issues
 - [ ] Run Prettier to format code
 - [ ] Review all 🔒 PROTECTED sections
 - [ ] Code review with team
 
-### 6.3 Security
+### Security
 - [ ] Security audit (OWASP top 10)
 - [ ] Validate all user inputs
 - [ ] Check for SQL injection vulnerabilities
 - [ ] Review authentication/authorization
 
-### 6.4 Performance
+### Performance
 - [ ] Optimize database queries (add indexes)
 - [ ] Implement caching with Redis
 - [ ] Optimize frontend bundle size
@@ -287,30 +265,28 @@ ${hasAI ? '- [ ] Test all protected bot logic thoroughly' : ''}
 
 **Time Estimate:** 5-7 days for ${options.teamSize}`);
 
-    // Phase 7: Deployment
-    phases.push(`## Phase 7: Deployment & Launch (Week 4-5)
+    // Phase 6: Deployment
+    phases.push(`## Phase ${hasAI ? '6' : hasAutomation ? '6' : '5'}: Deployment & Launch
 
-### 7.1 Self-Hosted Setup
-Since you mentioned using a 24/7 server:
-
+### Self-Hosted Setup
 - [ ] Set up Docker Compose on server
 - [ ] Configure nginx reverse proxy
 - [ ] Set up SSL certificates (Let's Encrypt)
 - [ ] Configure environment variables
 
-### 7.2 Database Setup
+### Database Setup
 - [ ] Create production database
 - [ ] Run migrations
 - [ ] Set up automated backups (daily)
 - [ ] Configure backup retention policy
 
-### 7.3 Monitoring
+### Monitoring
 - [ ] Set up application logging
 - [ ] Configure error tracking (Sentry)
 - [ ] Set up uptime monitoring
 - [ ] Create alerting for critical errors
 
-### 7.4 Documentation
+### Documentation
 - [ ] API documentation (OpenAPI/Swagger)
 - [ ] User guide
 - [ ] Admin guide
@@ -329,34 +305,26 @@ Since you mentioned using a 24/7 server:
     // Summary
     const totalWeeks = options.timeline.includes('1-2 weeks') ? 2 : options.timeline.includes('1 month') ? 4 : options.timeline.includes('2-3 months') ? 10 : 20;
 
-    const summary = `# Implementation Plan: ${options.projectName}
+    const summary = `# ${isVi ? 'Kế hoạch Triển khai' : 'Implementation Plan'}: ${options.projectName}
 
-## Project Overview
+## ${isVi ? 'Tổng quan Dự án' : 'Project Overview'}
 
-**Scope:** ${options.scope}
+**${isVi ? 'Phạm vi' : 'Scope'}:** ${options.scope}
 
-**Team:** ${options.teamSize}
-**Timeline:** ${options.timeline} (${totalWeeks} weeks)
-**Tech Stack:** ${options.techStack.join(', ')}
+**${isVi ? 'Team' : 'Team'}:** ${options.teamSize}
+**${isVi ? 'Thời gian' : 'Timeline'}:** ${options.timeline} (${totalWeeks} ${isVi ? 'tuần' : 'weeks'})
+**${isVi ? 'Công nghệ' : 'Tech Stack'}:** ${options.techStack.join(', ')}
 
 ---
 
-## Summary
+## ${isVi ? 'Tóm tắt' : 'Summary'}
 
-This plan covers the complete implementation of "${options.projectName}" from setup to deployment.
+${isVi ? 'Kế hoạch này bao gồm toàn bộ việc triển khai' : 'This plan covers the complete implementation of'} "${options.projectName}" ${isVi ? 'từ setup đến deployment.' : 'from setup to deployment.'}
 
-**Key Features:**
-${hasFrontend ? '✓ Modern frontend with React + Next.js\n' : ''}${hasBackend ? '✓ Robust backend with API and database\n' : ''}${hasAI ? '✓ AI features with protected code\n' : ''}${hasAutomation ? '✓ Automation and background jobs\n' : ''}✓ Self-hosted deployment for cost savings
-✓ Comprehensive testing
-✓ Production monitoring
-
-**Timeline Breakdown:**
-- Setup & Foundation: 1 week
-- Core Features: ${hasFrontend && hasBackend ? '2-3 weeks' : '1-2 weeks'}
-${hasAI ? '- AI Features: 1-2 weeks\n' : ''}${hasAutomation ? '- Automation: 1 week\n' : ''}- Testing & QA: 1 week
-- Deployment: 1 week
-
-**Total:** ${totalWeeks} weeks with ${options.teamSize}
+**${isVi ? 'Tính năng chính' : 'Key Features'}:**
+${hasFrontend ? `✓ ${isVi ? 'Frontend hiện đại với React + Next.js' : 'Modern frontend with React + Next.js'}\n` : ''}${hasBackend ? `✓ ${isVi ? 'Backend mạnh mẽ với API và database' : 'Robust backend with API and database'}\n` : ''}${hasAI ? `✓ ${isVi ? 'Tính năng AI với code được bảo vệ' : 'AI features with protected code'}\n` : ''}${hasAutomation ? `✓ ${isVi ? 'Tự động hóa và background jobs' : 'Automation and background jobs'}\n` : ''}✓ ${isVi ? 'Triển khai self-hosted tiết kiệm chi phí' : 'Self-hosted deployment for cost savings'}
+✓ ${isVi ? 'Testing toàn diện' : 'Comprehensive testing'}
+✓ ${isVi ? 'Giám sát production' : 'Production monitoring'}
 
 ---
 
@@ -364,59 +332,33 @@ ${phases.join('\n\n---\n\n')}
 
 ---
 
-## Risk Management
+## ${isVi ? 'Các bước tiếp theo' : 'Next Steps'}
 
-### Potential Risks:
-1. **AI API Costs**: Monitor token usage daily
-   - Mitigation: Implement token limits and cost alerts
-2. **Scope Creep**: Stick to defined requirements
-   - Mitigation: Use this plan as reference, reject out-of-scope requests
-3. **Technical Debt**: Rushing code quality
-   - Mitigation: Follow code reviews and don't skip tests
-${hasAI ? '4. **AI Logic Changes**: AI assistant modifying protected code\n   - Mitigation: Use 🔒 PROTECTED markers and follow .cursor/rules/ai-chatbot-rules.md' : ''}
+1. **${isVi ? 'Xem lại kế hoạch này' : 'Review this plan'}** ${isVi ? 'với team của bạn' : 'with your team'}
+2. **${isVi ? 'Thiết lập dự án' : 'Set up project'}** (Phase 1) ${isVi ? 'theo' : 'following'} docs/quick-start.md
+3. **${isVi ? 'Tạo tasks' : 'Create tasks'}** ${isVi ? 'trong công cụ quản lý dự án' : 'in your project management tool'}
+4. **${isVi ? 'Bắt đầu code' : 'Start coding'}** ${isVi ? 'theo các rules và templates của kit' : 'following the kit rules and templates'}
 
----
-
-## Success Criteria
-
-- [ ] All features from scope are implemented and working
-- [ ] Test coverage above 80%
-- [ ] Security audit passed
-- [ ] Performance metrics met (page load < 2s, API response < 500ms)
-${hasAI ? '- [ ] AI chatbot accuracy > 85%' : ''}
-- [ ] Successfully deployed to production
-- [ ] Documentation complete
-- [ ] Team trained on maintenance
-
----
-
-## Next Steps
-
-1. **Review this plan** with your team
-2. **Set up project** (Phase 1) following docs/quick-start.md
-3. **Create tasks** in your project management tool
-4. **Start coding** following the kit rules and templates
-5. **Daily standups** to track progress
-6. **Weekly demos** to stakeholders
-
-**Resources:**
+**${isVi ? 'Tài nguyên' : 'Resources'}:**
 - Quick Start: docs/quick-start.md
 - Protection Guide: docs/code-protection-guide.md
 ${hasAI ? '- AI Rules: .cursor/rules/ai-chatbot-rules.md\n' : ''}- Templates: templates/
 
-**Cost Savings:**
-Self-hosting saves **$500-840/year** compared to cloud hosting!
+**${isVi ? 'Tiết kiệm Chi phí' : 'Cost Savings'}:**
+${isVi ? 'Self-hosting tiết kiệm' : 'Self-hosting saves'} **$500-840/${isVi ? 'năm' : 'year'}** ${isVi ? 'so với cloud hosting!' : 'compared to cloud hosting!'}
 
 ---
 
-Generated by Universal Kit for Vibecoder
-Built with ❤️ using Next.js`;
+${isVi ? 'Tạo bởi Universal Kit cho Vibecoder' : 'Generated by Universal Kit for Vibecoder'}
+${isVi ? 'Xây dựng với ❤️ bằng Next.js' : 'Built with ❤️ using Next.js'}`;
 
     setGeneratedPlan(summary);
   };
 
   const copyToClipboard = () => {
     navigator.clipboard.writeText(generatedPlan);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
   };
 
   const downloadPlan = () => {
@@ -430,117 +372,119 @@ Built with ❤️ using Next.js`;
   };
 
   return (
-    <div className="bg-white rounded-2xl p-8 border-2 border-gray-200 shadow-lg">
-      <div className="space-y-6">
-        {/* Project Name */}
-        <div>
-          <label className="block text-sm font-semibold text-gray-700 mb-2">Project/Feature Name</label>
-          <input
-            type="text"
-            value={options.projectName}
-            onChange={(e) => setOptions({ ...options, projectName: e.target.value })}
-            placeholder="e.g., SOP Management System"
-            className="w-full px-4 py-3 rounded-xl border-2 border-gray-300 focus:border-purple-500 focus:ring-2 focus:ring-purple-200 outline-none transition-all"
-          />
-        </div>
-
-        {/* Scope */}
-        <div>
-          <label className="block text-sm font-semibold text-gray-700 mb-2">Project Scope</label>
-          <textarea
-            value={options.scope}
-            onChange={(e) => setOptions({ ...options, scope: e.target.value })}
-            rows={6}
-            placeholder="Describe your project scope, features, and requirements..."
-            className="w-full px-4 py-3 rounded-xl border-2 border-gray-300 focus:border-purple-500 focus:ring-2 focus:ring-purple-200 outline-none transition-all resize-none"
-          />
-        </div>
-
-        {/* Timeline */}
-        <div className="grid md:grid-cols-2 gap-4">
-          <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-2">Team Size</label>
-            <select
-              value={options.teamSize}
-              onChange={(e) => setOptions({ ...options, teamSize: e.target.value })}
-              className="w-full px-4 py-3 rounded-xl border-2 border-gray-300 focus:border-purple-500 outline-none"
-            >
-              <option>1 developer</option>
-              <option>2 developers</option>
-              <option>3-5 developers</option>
-              <option>6-10 developers</option>
-            </select>
-          </div>
-          <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-2">Timeline</label>
-            <select
-              value={options.timeline}
-              onChange={(e) => setOptions({ ...options, timeline: e.target.value })}
-              className="w-full px-4 py-3 rounded-xl border-2 border-gray-300 focus:border-purple-500 outline-none"
-            >
-              <option>1-2 weeks</option>
-              <option>1 month</option>
-              <option>2-3 months</option>
-              <option>3-6 months</option>
-            </select>
-          </div>
-        </div>
-
-        {/* Tech Stack */}
-        <div>
-          <label className="block text-sm font-semibold text-gray-700 mb-2">Tech Stack Preferences</label>
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-            {['React', 'Next.js', 'TypeScript', 'PostgreSQL', 'MongoDB', 'Prisma', 'GraphQL', 'Python', 'n8n'].map((tech) => (
-              <label
-                key={tech}
-                className="flex items-center gap-2 px-3 py-2 bg-gray-50 rounded-lg border-2 border-gray-200 cursor-pointer hover:border-purple-400 transition-colors"
-              >
-                <input
-                  type="checkbox"
-                  checked={options.techStack.includes(tech)}
-                  onChange={() => toggleTech(tech)}
-                  className="w-4 h-4 text-purple-600"
-                />
-                <span className="text-sm font-medium text-gray-700">{tech}</span>
-              </label>
-            ))}
-          </div>
-        </div>
-
-        {/* Generate Button */}
-        <button
-          onClick={generatePlan}
-          className="w-full px-8 py-4 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-xl font-semibold hover:shadow-xl hover:-translate-y-0.5 transition-all"
-        >
-          Generate Implementation Plan 📋
-        </button>
-
-        {/* Generated Plan Preview */}
-        {generatedPlan && (
-          <div className="bg-gray-50 rounded-xl p-6 border-2 border-gray-200">
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="font-semibold text-gray-900">Implementation Plan</h3>
-              <div className="flex gap-2">
-                <button
-                  onClick={downloadPlan}
-                  className="px-3 py-1 bg-white hover:bg-gray-100 rounded-lg text-sm font-medium border transition-colors"
-                >
-                  Download
-                </button>
-                <button
-                  onClick={copyToClipboard}
-                  className="px-3 py-1 bg-white hover:bg-gray-100 rounded-lg text-sm font-medium border transition-colors"
-                >
-                  Copy
-                </button>
-              </div>
-            </div>
-            <div className="space-y-4 text-sm text-gray-700 whitespace-pre-wrap max-h-96 overflow-y-auto bg-white rounded-lg p-4 font-mono leading-relaxed">
-              {generatedPlan}
-            </div>
-          </div>
-        )}
+    <div className="space-y-6">
+      {/* Project Name */}
+      <div>
+        <label className="block text-sm font-semibold text-gray-700 mb-2">{labels.projectName}</label>
+        <input
+          type="text"
+          value={options.projectName}
+          onChange={(e) => setOptions({ ...options, projectName: e.target.value })}
+          placeholder={labels.projectNamePlaceholder}
+          className="w-full px-4 py-3 rounded-xl border-2 border-gray-300 focus:border-purple-500 focus:ring-2 focus:ring-purple-200 outline-none transition-all"
+        />
       </div>
+
+      {/* Scope */}
+      <div>
+        <label className="block text-sm font-semibold text-gray-700 mb-2">{labels.projectScope}</label>
+        <textarea
+          value={options.scope}
+          onChange={(e) => setOptions({ ...options, scope: e.target.value })}
+          rows={5}
+          placeholder={labels.projectScopePlaceholder}
+          className="w-full px-4 py-3 rounded-xl border-2 border-gray-300 focus:border-purple-500 focus:ring-2 focus:ring-purple-200 outline-none transition-all resize-none"
+        />
+      </div>
+
+      {/* Timeline */}
+      <div className="grid md:grid-cols-2 gap-4">
+        <div>
+          <label className="block text-sm font-semibold text-gray-700 mb-2">{labels.teamSize}</label>
+          <select
+            value={options.teamSize}
+            onChange={(e) => setOptions({ ...options, teamSize: e.target.value })}
+            className="w-full px-4 py-3 rounded-xl border-2 border-gray-300 focus:border-purple-500 outline-none bg-white"
+          >
+            {teamSizes.map((size) => (
+              <option key={size.value} value={size.value}>{size.label}</option>
+            ))}
+          </select>
+        </div>
+        <div>
+          <label className="block text-sm font-semibold text-gray-700 mb-2">{labels.timeline}</label>
+          <select
+            value={options.timeline}
+            onChange={(e) => setOptions({ ...options, timeline: e.target.value })}
+            className="w-full px-4 py-3 rounded-xl border-2 border-gray-300 focus:border-purple-500 outline-none bg-white"
+          >
+            {timelines.map((time) => (
+              <option key={time.value} value={time.value}>{time.label}</option>
+            ))}
+          </select>
+        </div>
+      </div>
+
+      {/* Tech Stack */}
+      <div>
+        <label className="block text-sm font-semibold text-gray-700 mb-2">{labels.techStack}</label>
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+          {['React', 'Next.js', 'TypeScript', 'PostgreSQL', 'MongoDB', 'Prisma', 'GraphQL', 'Python', 'n8n'].map((tech) => (
+            <label
+              key={tech}
+              className={`flex items-center gap-2 px-3 py-2 rounded-lg border-2 cursor-pointer transition-colors ${options.techStack.includes(tech)
+                  ? 'border-purple-500 bg-purple-50 text-purple-700'
+                  : 'border-gray-200 bg-gray-50 hover:border-purple-400'
+                }`}
+            >
+              <input
+                type="checkbox"
+                checked={options.techStack.includes(tech)}
+                onChange={() => toggleTech(tech)}
+                className="w-4 h-4 text-purple-600 rounded"
+              />
+              <span className="text-sm font-medium">{tech}</span>
+            </label>
+          ))}
+        </div>
+      </div>
+
+      {/* Generate Button */}
+      <button
+        onClick={generatePlan}
+        className="w-full px-8 py-4 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-xl font-semibold hover:shadow-xl hover:-translate-y-0.5 transition-all"
+      >
+        {labels.generateBtn}
+      </button>
+
+      {/* Generated Plan Preview */}
+      {generatedPlan && (
+        <div className="bg-gray-50 rounded-xl p-6 border-2 border-gray-200">
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="font-semibold text-gray-900">{labels.generatedTitle}</h3>
+            <div className="flex gap-2">
+              <button
+                onClick={downloadPlan}
+                className="px-4 py-2 bg-white hover:bg-gray-100 rounded-lg text-sm font-medium border transition-colors"
+              >
+                {labels.download}
+              </button>
+              <button
+                onClick={copyToClipboard}
+                className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${copied
+                    ? 'bg-green-100 text-green-700'
+                    : 'bg-white hover:bg-gray-100 border'
+                  }`}
+              >
+                {copied ? labels.copied : labels.copy}
+              </button>
+            </div>
+          </div>
+          <div className="bg-white rounded-lg p-4 font-mono text-sm text-gray-700 whitespace-pre-wrap max-h-96 overflow-y-auto border leading-relaxed">
+            {generatedPlan}
+          </div>
+        </div>
+      )}
     </div>
   );
 }

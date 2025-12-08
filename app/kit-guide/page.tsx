@@ -246,10 +246,13 @@ function KitGuideContent() {
           <div className="max-w-6xl mx-auto">
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               {docs.map((doc) => (
-                <a
+                <div
                   key={doc.file}
-                  href={`vscode://file/${doc.file}`}
-                  className="bg-white/80 backdrop-blur-sm p-6 rounded-2xl border border-gray-200/50 shadow-lg hover:-translate-y-1 group hover:shadow-xl transition-all"
+                  onClick={() => {
+                    navigator.clipboard.writeText(doc.file);
+                    alert(language === 'vi' ? `Đã copy: ${doc.file}` : `Copied: ${doc.file}`);
+                  }}
+                  className="bg-white/80 backdrop-blur-sm p-6 rounded-2xl border border-gray-200/50 shadow-lg hover:-translate-y-1 group hover:shadow-xl transition-all cursor-pointer"
                 >
                   <div className="flex items-start justify-between mb-3">
                     <span className="text-3xl group-hover:scale-110 transition-transform">{doc.icon}</span>
@@ -257,7 +260,10 @@ function KitGuideContent() {
                   </div>
                   <h3 className="text-lg font-bold text-gray-900 mb-2">{doc.title}</h3>
                   <p className="text-sm text-gray-500 font-mono truncate">{doc.file}</p>
-                </a>
+                  <p className="text-xs text-blue-600 mt-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                    {language === 'vi' ? '👆 Click để copy đường dẫn' : '👆 Click to copy path'}
+                  </p>
+                </div>
               ))}
             </div>
           </div>
@@ -267,39 +273,177 @@ function KitGuideContent() {
       {/* Embedded Docs (quick view) */}
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4">
-          <div className="max-w-5xl mx-auto space-y-6">
-            <div className="text-center mb-6">
-              <h3 className="text-2xl md:text-3xl font-bold text-gray-900">{t('docs.quickview')}</h3>
-              <p className="text-gray-600">{t('docs.quickviewDesc')}</p>
+          <div className="max-w-6xl mx-auto">
+            <div className="text-center mb-10">
+              <h3 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">
+                {language === 'vi' ? '🎯 Bắt đầu trong 3 bước đơn giản' : '🎯 Get Started in 3 Simple Steps'}
+              </h3>
+              <p className="text-gray-600">
+                {language === 'vi' ? 'Không cần kinh nghiệm - chỉ cần làm theo hướng dẫn!' : 'No experience needed - just follow the guide!'}
+              </p>
             </div>
 
-            <div className="grid md:grid-cols-2 gap-6">
-              <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-6 border border-blue-200/50">
-                <div className="flex items-center gap-2 mb-3">
-                  <span className="text-2xl">🚀</span>
-                  <h4 className="text-xl font-semibold text-gray-900">Quick Start (docs/quick-start.md)</h4>
+            {/* Step-by-step Visual Guide */}
+            <div className="grid md:grid-cols-3 gap-6 mb-10">
+              {/* Step 1 */}
+              <div className="relative bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl p-6 text-white shadow-xl shadow-blue-500/20">
+                <div className="absolute -top-4 -left-4 w-12 h-12 bg-white rounded-full flex items-center justify-center text-2xl font-bold text-blue-600 shadow-lg border-4 border-blue-500">
+                  1
                 </div>
-                <ul className="list-disc list-inside space-y-2 text-gray-700 text-sm">
-                  <li>Clone/copy kit, tạo file `.env.local` từ `.env.example`.</li>
-                  <li>Chạy `npm install` (Node) và thiết lập Python venv nếu cần.</li>
-                  <li>Dev backend: `npm run dev`; Dev web guide: `npm run dev:web` → `http://localhost:3000/kit-guide`.</li>
-                  <li>Docker full stack: `docker-compose up --build` (app, postgres, redis, n8n, python_worker).</li>
-                  <li>Tests: `npm test`; Lint: `npm run lint`; Doctor: `npm run doctor`.</li>
-                </ul>
+                <div className="mt-4">
+                  <div className="text-4xl mb-4">📥</div>
+                  <h4 className="text-xl font-bold mb-2">
+                    {language === 'vi' ? 'Tải & Cài đặt' : 'Download & Install'}
+                  </h4>
+                  <p className="text-blue-100 text-sm mb-4">
+                    {language === 'vi'
+                      ? 'Clone repo về máy, rồi chạy lệnh cài đặt'
+                      : 'Clone the repo, then run install command'}
+                  </p>
+                  <div className="bg-white/20 rounded-lg p-3 font-mono text-sm">
+                    <code>npm install</code>
+                  </div>
+                </div>
               </div>
 
-              <div className="bg-gradient-to-br from-red-50 to-orange-50 rounded-2xl p-6 border border-red-200/50">
-                <div className="flex items-center gap-2 mb-3">
-                  <span className="text-2xl">🔒</span>
-                  <h4 className="text-xl font-semibold text-gray-900">Code Protection (docs/code-protection-guide.md)</h4>
+              {/* Step 2 */}
+              <div className="relative bg-gradient-to-br from-purple-500 to-purple-600 rounded-2xl p-6 text-white shadow-xl shadow-purple-500/20">
+                <div className="absolute -top-4 -left-4 w-12 h-12 bg-white rounded-full flex items-center justify-center text-2xl font-bold text-purple-600 shadow-lg border-4 border-purple-500">
+                  2
                 </div>
-                <ul className="list-disc list-inside space-y-2 text-gray-700 text-sm">
-                  <li>Đánh dấu vùng nhạy cảm bằng comment 🔒 PROTECTED; tránh refactor khi chưa được duyệt.</li>
-                  <li>AI/bot phải đọc `.cursor/rules/code-preservation.md` trước khi chỉnh sửa.</li>
-                  <li>Không thay đổi logic bot/AI, prompt, RAG fallback; luôn giữ validation & retry.</li>
-                  <li>Refactor nguy hiểm: phải hỏi/duyệt trước; an toàn: thêm log, sửa typo, bổ sung test.</li>
-                  <li>Trước khi merge: chạy lint/test; kiểm tra diff không đụng vùng protected.</li>
-                </ul>
+                <div className="mt-4">
+                  <div className="text-4xl mb-4">⚡</div>
+                  <h4 className="text-xl font-bold mb-2">
+                    {language === 'vi' ? 'Chạy Web' : 'Run Web'}
+                  </h4>
+                  <p className="text-purple-100 text-sm mb-4">
+                    {language === 'vi'
+                      ? 'Double-click file RUN_WEB.bat hoặc chạy lệnh'
+                      : 'Double-click RUN_WEB.bat or run command'}
+                  </p>
+                  <div className="bg-white/20 rounded-lg p-3 font-mono text-sm">
+                    <code>npm run dev:web</code>
+                  </div>
+                </div>
+              </div>
+
+              {/* Step 3 */}
+              <div className="relative bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-2xl p-6 text-white shadow-xl shadow-emerald-500/20">
+                <div className="absolute -top-4 -left-4 w-12 h-12 bg-white rounded-full flex items-center justify-center text-2xl font-bold text-emerald-600 shadow-lg border-4 border-emerald-500">
+                  3
+                </div>
+                <div className="mt-4">
+                  <div className="text-4xl mb-4">🎉</div>
+                  <h4 className="text-xl font-bold mb-2">
+                    {language === 'vi' ? 'Bắt đầu Code!' : 'Start Coding!'}
+                  </h4>
+                  <p className="text-emerald-100 text-sm mb-4">
+                    {language === 'vi'
+                      ? 'Mở trình duyệt và bắt đầu tạo feature'
+                      : 'Open browser and start creating features'}
+                  </p>
+                  <div className="bg-white/20 rounded-lg p-3 font-mono text-sm">
+                    <code>localhost:3000</code>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Visual Tips Cards */}
+            <div className="grid md:grid-cols-2 gap-6">
+              {/* For Beginners */}
+              <div className="bg-gradient-to-br from-amber-50 to-orange-50 rounded-2xl p-6 border border-amber-200/50">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-12 h-12 bg-gradient-to-br from-amber-400 to-orange-500 rounded-xl flex items-center justify-center text-2xl shadow-lg">
+                    🌟
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-gray-900">
+                      {language === 'vi' ? 'Dành cho Người mới' : 'For Beginners'}
+                    </h4>
+                    <p className="text-sm text-gray-600">
+                      {language === 'vi' ? 'Bắt đầu từ đây!' : 'Start here!'}
+                    </p>
+                  </div>
+                </div>
+                <div className="space-y-3">
+                  <div className="flex items-start gap-3 bg-white rounded-xl p-3">
+                    <span className="text-xl">📂</span>
+                    <div>
+                      <p className="font-medium text-gray-900 text-sm">
+                        {language === 'vi' ? 'File RUN_WEB.bat' : 'RUN_WEB.bat file'}
+                      </p>
+                      <p className="text-xs text-gray-600">
+                        {language === 'vi' ? 'Double-click để chạy web ngay' : 'Double-click to run web instantly'}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-3 bg-white rounded-xl p-3">
+                    <span className="text-xl">📖</span>
+                    <div>
+                      <p className="font-medium text-gray-900 text-sm">
+                        {language === 'vi' ? 'Thư mục docs/' : 'docs/ folder'}
+                      </p>
+                      <p className="text-xs text-gray-600">
+                        {language === 'vi' ? 'Đọc hướng dẫn chi tiết' : 'Read detailed guides'}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-3 bg-white rounded-xl p-3">
+                    <span className="text-xl">🎨</span>
+                    <div>
+                      <p className="font-medium text-gray-900 text-sm">
+                        {language === 'vi' ? 'Thư mục templates/' : 'templates/ folder'}
+                      </p>
+                      <p className="text-xs text-gray-600">
+                        {language === 'vi' ? 'Copy & paste các mẫu có sẵn' : 'Copy & paste ready templates'}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Pro Tips */}
+              <div className="bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl p-6 text-white">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-12 h-12 bg-gradient-to-br from-cyan-400 to-blue-500 rounded-xl flex items-center justify-center text-2xl shadow-lg">
+                    🛡️
+                  </div>
+                  <div>
+                    <h4 className="font-bold">
+                      {language === 'vi' ? 'Mẹo Bảo vệ Code' : 'Code Protection Tips'}
+                    </h4>
+                    <p className="text-sm text-slate-400">
+                      {language === 'vi' ? 'Giữ code an toàn với AI' : 'Keep code safe with AI'}
+                    </p>
+                  </div>
+                </div>
+                <div className="space-y-3">
+                  <div className="flex items-center gap-3 bg-white/10 rounded-xl p-3">
+                    <span className="text-green-400 text-xl">✅</span>
+                    <p className="text-sm">
+                      {language === 'vi'
+                        ? 'Đánh dấu code quan trọng với 🔒 PROTECTED'
+                        : 'Mark important code with 🔒 PROTECTED'}
+                    </p>
+                  </div>
+                  <div className="flex items-center gap-3 bg-white/10 rounded-xl p-3">
+                    <span className="text-green-400 text-xl">✅</span>
+                    <p className="text-sm">
+                      {language === 'vi'
+                        ? 'AI sẽ không sửa vùng code được bảo vệ'
+                        : 'AI won\'t modify protected code areas'}
+                    </p>
+                  </div>
+                  <div className="flex items-center gap-3 bg-white/10 rounded-xl p-3">
+                    <span className="text-green-400 text-xl">✅</span>
+                    <p className="text-sm">
+                      {language === 'vi'
+                        ? 'Chạy test trước khi merge: npm test'
+                        : 'Run tests before merge: npm test'}
+                    </p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -428,7 +572,7 @@ function KitGuideContent() {
             </div>
 
             <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
-              <a href="docs/quick-start.md" className="px-8 py-3 bg-white text-blue-600 rounded-xl font-semibold hover:shadow-xl transition-all hover:-translate-y-0.5">
+              <a href="#docs" className="px-8 py-3 bg-white text-blue-600 rounded-xl font-semibold hover:shadow-xl transition-all hover:-translate-y-0.5">
                 {t('quickactions.viewGuide')}
               </a>
               <a href="#prompt-gen" className="px-8 py-3 bg-white/10 backdrop-blur-sm border-2 border-white/30 rounded-xl font-semibold hover:bg-white/20 transition-all hover:-translate-y-0.5">
