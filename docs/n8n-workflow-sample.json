@@ -1,0 +1,37 @@
+{
+  "name": "Daily Sales Sync",
+  "nodes": [
+    {
+      "parameters": { "cronExpression": "0 1 * * *" },
+      "name": "Schedule",
+      "type": "n8n-nodes-base.cron"
+    },
+    {
+      "parameters": { "url": "https://api.example.com/v1/reports/daily", "responseFormat": "json" },
+      "name": "Fetch Reports",
+      "type": "n8n-nodes-base.httpRequest"
+    },
+    {
+      "parameters": { "mode": "batch", "batchSize": 100 },
+      "name": "Batch",
+      "type": "n8n-nodes-base.batch"
+    },
+    {
+      "parameters": { "operation": "insert", "table": "reports" },
+      "name": "DB Upsert",
+      "type": "n8n-nodes-base.postgres"
+    },
+    {
+      "parameters": { "channel": "#ops-alerts", "text": "Daily sales sync completed" },
+      "name": "Notify Slack",
+      "type": "n8n-nodes-base.slack"
+    }
+  ],
+  "connections": {
+    "Schedule": { "main": [["Fetch Reports"]] },
+    "Fetch Reports": { "main": [["Batch"]] },
+    "Batch": { "main": [["DB Upsert"]] },
+    "DB Upsert": { "main": [["Notify Slack"]] }
+  }
+}
+

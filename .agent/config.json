@@ -1,0 +1,154 @@
+{
+  "version": "1.0.0",
+  "name": "Universal Kit Agent System",
+  "description": "AI agent configuration for Vibecoder universal development kit",
+
+  "agent": {
+    "model": "claude-sonnet-4-5",
+    "temperature": 0.7,
+    "maxTokens": 8192,
+    "systemPrompt": "You are an expert full-stack developer assistant with deep knowledge of modern web technologies, best practices, and architectural patterns."
+  },
+
+  "skills": {
+    "codeReviewer": {
+      "enabled": true,
+      "autoRun": false,
+      "description": "Automated code review with best practices checks",
+      "trigger": "on_pr_create"
+    },
+    "testGenerator": {
+      "enabled": true,
+      "autoRun": false,
+      "description": "Generate unit and integration tests",
+      "trigger": "manual"
+    },
+    "refactoring": {
+      "enabled": true,
+      "autoRun": false,
+      "description": "Intelligent code refactoring suggestions",
+      "trigger": "manual"
+    },
+    "docGenerator": {
+      "enabled": true,
+      "autoRun": false,
+      "description": "Generate documentation from code",
+      "trigger": "manual"
+    },
+    "securityAudit": {
+      "enabled": true,
+      "autoRun": false,
+      "description": "Security vulnerability scanning",
+      "trigger": "on_commit"
+    }
+  },
+
+  "workflows": {
+    "feature": {
+      "enabled": true,
+      "steps": [
+        "analyze_requirements",
+        "create_plan",
+        "generate_code",
+        "generate_tests",
+        "review_code",
+        "create_documentation"
+      ]
+    },
+    "bugfix": {
+      "enabled": true,
+      "steps": [
+        "analyze_issue",
+        "locate_root_cause",
+        "propose_fix",
+        "generate_tests",
+        "review_fix"
+      ]
+    },
+    "refactor": {
+      "enabled": true,
+      "steps": [
+        "analyze_code",
+        "identify_issues",
+        "propose_refactoring",
+        "apply_changes",
+        "verify_behavior"
+      ]
+    }
+  },
+
+  "codeGeneration": {
+    "templates": {
+      "react": {
+        "component": "templates/react/component",
+        "hook": "templates/react/hook",
+        "page": "templates/react/page"
+      },
+      "api": {
+        "restEndpoint": "templates/api/rest-endpoint",
+        "graphqlResolver": "templates/api/graphql-resolver"
+      },
+      "fullstack": {
+        "crud": "templates/fullstack/crud-feature"
+      }
+    },
+    "conventions": {
+      "namingStyle": "camelCase",
+      "componentStyle": "functional",
+      "testFramework": "jest",
+      "formatting": "prettier"
+    }
+  },
+
+  "context": {
+    "files": [
+      ".cursor/rules/**/*.md",
+      "memory-bank/**/*.md",
+      "package.json",
+      "tsconfig.json"
+    ],
+    "maxContextFiles": 50,
+    "excludePatterns": [
+      "node_modules/**",
+      "dist/**",
+      "build/**",
+      ".next/**",
+      "coverage/**"
+    ]
+  },
+
+  "quality": {
+    "checks": {
+      "linting": true,
+      "formatting": true,
+      "typeChecking": true,
+      "testing": true,
+      "security": true
+    },
+    "standards": {
+      "typescript": "strict",
+      "accessibility": "wcag-aa",
+      "performance": "lighthouse-90+"
+    }
+  },
+
+  "integrations": {
+    "vscode": {
+      "enabled": true,
+      "commands": [
+        "generate:component",
+        "generate:test",
+        "review:code",
+        "refactor:suggest"
+      ]
+    },
+    "git": {
+      "enabled": true,
+      "hooks": ["pre-commit", "pre-push"]
+    },
+    "ci": {
+      "enabled": true,
+      "provider": "github-actions"
+    }
+  }
+}

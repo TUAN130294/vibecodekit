@@ -1,0 +1,162 @@
+{
+  "version": "1.0.0",
+  "name": "Universal Kit for Vibecoder",
+  "description": "Complete full-stack development kit with AI-powered workflows",
+
+  "features": {
+    "frontend": ["react", "nextjs", "tailwind", "typescript"],
+    "backend": ["nodejs", "express", "typescript", "python"],
+    "database": ["postgresql", "mongodb", "prisma", "typeorm"],
+    "api": ["rest", "graphql"],
+    "automation": ["n8n", "workers"],
+    "deployment": ["aws", "docker", "github-actions"],
+    "testing": ["jest", "playwright", "supertest"],
+    "uiux": ["ui-ux-pro-max"]
+  },
+
+  "commands": {
+    "/generate": {
+      "description": "Generate code from templates",
+      "subcommands": {
+        "component": "Generate React component",
+        "hook": "Generate custom React hook",
+        "page": "Generate Next.js page",
+        "api": "Generate REST API endpoint",
+        "crud": "Generate full CRUD feature",
+        "test": "Generate tests for code"
+      }
+    },
+    "/ui-ux-pro-max": {
+      "description": "UI/UX presets and assets",
+      "subcommands": {
+        "styles": "Design Styles (57+)",
+        "palettes": "Color Palettes (95)",
+        "typography": "Font Pairings (50+)",
+        "charts": "Chart Types (24)",
+        "landings": "Landing Patterns (14)",
+        "guidelines": "UX Guidelines (98)"
+      },
+      "alias": ["/uxvibe"]
+    },
+    "/review": {
+      "description": "Run code review on current file or PR",
+      "options": ["--pr", "--security", "--performance", "--fix"]
+    },
+    "/refactor": {
+      "description": "Suggest refactoring improvements",
+      "options": ["--extract-function", "--auto", "--performance"]
+    },
+    "/workflow": {
+      "description": "Run automated workflows",
+      "subcommands": {
+        "feature": "Full feature development workflow",
+        "bugfix": "Bug fix workflow",
+        "refactor": "Refactoring workflow"
+      }
+    },
+    "/docs": {
+      "description": "Generate documentation",
+      "options": ["--api", "--components", "--readme"]
+    }
+  },
+
+  "templates": {
+    "uiuxPresets": {
+      "designStyles": "ui-ux-pro-max-skill-main (57+ styles: glassmorphism, clay, minimal, brutalism, bento, dark...)",
+      "colorPalettes": "ui-ux-pro-max-skill-main (95 palettes for SaaS, ecom, healthcare, fintech...)",
+      "typography": "ui-ux-pro-max-skill-main (50+ pairings, Google Fonts imports)",
+      "chartTypes": "ui-ux-pro-max-skill-main (24 chart recommendations + accessibility notes)",
+      "landingPatterns": "ui-ux-pro-max-skill-main (14 landing page structures, CTA patterns)",
+      "uxGuidelines": "ui-ux-pro-max-skill-main (98 best practices & anti-patterns)"
+    },
+    "react": {
+      "component": {
+        "path": "templates/react/component",
+        "files": ["Component.tsx", "Component.test.tsx"]
+      },
+      "hook": {
+        "path": "templates/react/hook",
+        "files": ["useHook.ts", "useHook.test.ts"]
+      },
+      "page": {
+        "path": "templates/react/page",
+        "files": ["page.tsx"]
+      }
+    },
+    "api": {
+      "rest": {
+        "path": "templates/api/rest-endpoint",
+        "files": ["route.ts"]
+      },
+      "graphql": {
+        "path": "templates/api/graphql-resolver",
+        "files": ["resolver.ts"]
+      }
+    },
+    "fullstack": {
+      "crud": {
+        "path": "templates/fullstack/crud-feature",
+        "description": "Complete CRUD with frontend + backend + tests"
+      }
+    }
+  },
+
+  "rules": {
+    "frontend": [".cursor/rules/frontend/react.md", ".cursor/rules/frontend/nextjs.md", ".cursor/rules/frontend/tailwind.md"],
+    "backend": [".cursor/rules/backend.md", ".cursor/rules/api.md"],
+    "database": [".cursor/rules/database.md", ".cursor/rules/database/mongodb.md", ".cursor/rules/database/prisma.md"],
+    "testing": [".cursor/rules/testing.md"],
+    "security": [".cursor/rules/security.md"],
+    "deployment": [".cursor/rules/deployment/aws.md"],
+    "uiux": [".cursor/rules/uiuxpro.md"]
+  },
+
+  "agents": {
+    "codeReviewer": {
+      "enabled": true,
+      "config": ".agent/skills/code-reviewer.md",
+      "autoRun": false
+    },
+    "testGenerator": {
+      "enabled": true,
+      "config": ".agent/skills/test-generator.md",
+      "autoRun": false
+    },
+    "refactoring": {
+      "enabled": true,
+      "config": ".agent/skills/refactoring.md",
+      "autoRun": false
+    }
+  },
+
+  "workflows": {
+    "feature": {
+      "enabled": true,
+      "config": ".agent/workflows/feature-workflow.md",
+      "steps": ["analyze", "plan", "generate", "test", "review", "document"]
+    }
+  },
+
+  "integrations": {
+    "vscode": true,
+    "cursor": true,
+    "github": true,
+    "n8n": true
+  },
+
+  "quickStart": {
+    "steps": [
+      "npm install",
+      "Copy .env.example to .env.local",
+      "npm run dev",
+      "Visit http://localhost:3000"
+    ]
+  },
+
+  "documentation": {
+    "main": "README.md",
+    "quickStart": "docs/quick-start.md",
+    "architecture": "memory-bank/architecture.md",
+    "api": "memory-bank/api-specs.md"
+  }
+}

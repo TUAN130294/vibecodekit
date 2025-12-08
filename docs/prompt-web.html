@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <title>Vibecode Kit Prompt Builder</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+    :root {
+      --primary: #22c55e;     /* emerald for CTA */
+      --primary-2: #39ff14;   /* neon green accent */
+      --bg: #050505;          /* deep OLED */
+      --card: rgba(12, 12, 12, 0.92);
+      --border: rgba(255, 255, 255, 0.08);
+      --text: #e5e7eb;
+      --muted: #9ca3af;
+      --radius: 14px;
+    }
+    * { box-sizing: border-box; }
+    body {
+      font-family: "Inter", system-ui, -apple-system, sans-serif;
+      margin: 0;
+      padding: 32px;
+      background: radial-gradient(circle at 20% 20%, rgba(57,255,20,0.15), transparent 26%),
+                  radial-gradient(circle at 80% 0%, rgba(34,197,94,0.14), transparent 32%),
+                  var(--bg);
+      color: var(--text);
+    }
+    h2, h3 { margin: 0 0 10px 0; }
+    .shell {
+      max-width: 1150px;
+      margin: 0 auto;
+      background: linear-gradient(135deg, rgba(10,10,10,0.9), rgba(12,12,12,0.9));
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 28px;
+      box-shadow: 0 30px 70px rgba(0,0,0,0.45), 0 0 0 1px rgba(255,255,255,0.02);
+      backdrop-filter: blur(10px);
+    }
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: rgba(57,255,20,0.14);
+      border: 1px solid rgba(57,255,20,0.35);
+      color: #d9f99d;
+      font-size: 12px;
+      letter-spacing: 0.3px;
+      text-transform: uppercase;
+    }
+    .row { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 14px; }
+    .row > div { flex: 1; min-width: 340px; }
+    label { font-weight: 600; color: #cbd5e1; }
+    input, textarea {
+      width: 100%;
+      border: 1px solid var(--border);
+      background: #0a0a0a;
+      color: var(--text);
+      border-radius: var(--radius);
+      padding: 12px;
+      margin-top: 6px;
+      font-size: 14px;
+      transition: border 0.15s ease, box-shadow 0.15s ease;
+    }
+    input:focus, textarea:focus {
+      outline: none;
+      border: 1px solid rgba(57,255,20,0.6);
+      box-shadow: 0 0 0 3px rgba(57,255,20,0.18);
+    }
+    textarea { min-height: 170px; }
+    .hint { color: var(--muted); font-size: 13px; margin-top: 4px; }
+    button {
+      background: linear-gradient(135deg, var(--primary), var(--primary-2));
+      border: none;
+      color: #e5e7eb;
+      padding: 12px 18px;
+      border-radius: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 12px 28px rgba(34,197,94,0.35);
+      transition: transform 0.1s ease, box-shadow 0.1s ease;
+      margin-top: 14px;
+    }
+    button:hover { transform: translateY(-1px); box-shadow: 0 14px 32px rgba(34,197,94,0.45); }
+    .output {
+      background: #0a0a0a;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px;
+      white-space: pre-wrap;
+      min-height: 170px;
+      color: #dbeafe;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.03);
+    }
+    .pill {
+      display: inline-block;
+      padding: 7px 11px;
+      border-radius: 12px;
+      background: rgba(34,211,238,0.12);
+      color: #a5f3fc;
+      border: 1px solid rgba(34,211,238,0.2);
+      font-size: 12px;
+      margin-right: 8px;
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 14px;
+      box-shadow: 0 12px 28px rgba(0,0,0,0.25);
+    }
+  </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+</head>
+<body>
+  <div class="shell">
+    <div class="header">
+      <div class="badge">Developer Tools • UI UX Pro Max</div>
+      <div class="pill">Dark OLED • Accent Neon Green • Radius 14px</div>
+    </div>
+    <h2 style="margin-top:8px;">Vibecode Kit Prompt Builder</h2>
+    <p style="color:#cbd5e1;">Tạo prompt chuẩn rule (AGENTS, .cursorrules, .cursor/rules/*, memory-bank/*) cho AI dev workflow. Dán mô tả hoặc tải PDF, chọn stack/modules/UIUX/n8n rồi copy vào Cursor/Antigravity.</p>
+
+  <div class="row">
+    <div>
+      <label><strong>1) Mô tả văn bản</strong></label>
+      <textarea id="textInput" placeholder="Dán mô tả dự án..."></textarea>
+    </div>
+    <div>
+      <label><strong>2) PDF (tùy chọn)</strong></label><br/>
+      <input type="file" id="pdfInput" accept="application/pdf" />
+      <div class="hint">Chọn PDF, nội dung sẽ được trích ra và ghép vào prompt.</div>
+      <textarea id="pdfText" placeholder="Nội dung PDF sẽ hiện ở đây..." readonly></textarea>
+    </div>
+  </div>
+
+  <div class="row">
+    <div>
+      <label><strong>Stack ưu tiên</strong></label>
+      <input id="stack" placeholder="VD: Express + TypeORM + Redis + n8n + React/Tailwind" />
+    </div>
+    <div>
+      <label><strong>Module chính</strong></label>
+      <input id="modules" placeholder="VD: users, orders, reports, workflows" />
+    </div>
+  </div>
+
+  <div class="row">
+    <div>
+      <label><strong>UI/UX vibe</strong></label>
+      <input id="uiux" placeholder="VD: bento, fintech palette, modern sans, charts line/bar, React+Tailwind" />
+    </div>
+    <div>
+      <label><strong>Workflows n8n</strong></label>
+      <input id="n8n" placeholder="VD: cron daily sales, webhook orders, notify Slack" />
+    </div>
+  </div>
+
+  <button id="generate">Tạo Prompt</button>
+
+  <h3>Prompt để copy vào Cursor</h3>
+  <div class="output" id="output"></div>
+  </div>
+
+  <script>
+    const pdfInput = document.getElementById('pdfInput');
+    const pdfText = document.getElementById('pdfText');
+    const output = document.getElementById('output');
+
+    async function extractPdf(file) {
+      const arrayBuffer = await file.arrayBuffer();
+      const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+      let text = '';
+      for (let i = 1; i <= pdf.numPages; i++) {
+        const page = await pdf.getPage(i);
+        const content = await page.getTextContent();
+        const strings = content.items.map(item => item.str).join(' ');
+        text += strings + '\n';
+      }
+      return text;
+    }
+
+    pdfInput.addEventListener('change', async (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      pdfText.value = 'Đang trích xuất...';
+      try {
+        const text = await extractPdf(file);
+        pdfText.value = text.trim();
+      } catch (err) {
+        pdfText.value = 'Lỗi đọc PDF: ' + err.message;
+      }
+    });
+
+    document.getElementById('generate').addEventListener('click', () => {
+      const desc = document.getElementById('textInput').value.trim();
+      const pdf = pdfText.value.trim();
+      const stack = document.getElementById('stack').value.trim();
+      const modules = document.getElementById('modules').value.trim();
+      const uiux = document.getElementById('uiux').value.trim();
+      const n8n = document.getElementById('n8n').value.trim();
+
+      const mergedDesc = [desc, pdf].filter(Boolean).join('\n\n');
+
+      const prompt = `
+Bạn là AI trong Cursor. Hãy đọc và TUÂN THỦ tuyệt đối bộ rule ở:
+- AGENTS.md, .cursorrules
+- .cursor/rules/* (backend, api, database, security, testing, automation, python, uiuxpro)
+- memory-bank/* (brief, tech stack, architecture, api-specs, implementation-plan, progress, decisions)
+
+Nhiệm vụ:
+1) Tóm tắt yêu cầu người dùng (dưới đây) và xác nhận phạm vi.
+2) Đề xuất module backend (controller/service/repo/entity/migration/tests) cho: ${modules || '(cập nhật nếu trống)'}.
+3) Định nghĩa API (REST) theo envelope { success, data | code, message }, validation (Zod/Joi), error handling, auth JWT, rate limit, CORS allow-list.
+4) DB: entities + migrations (TypeORM), tránh N+1, index hợp lý.
+5) Automation: đề xuất/soạn workflow n8n (Trigger → Fetch → Transform → Validate → Persist → Notify) cho: ${n8n || '(cập nhật nếu trống)'}.
+6) UI/UX: chọn style + palette + font + chart từ UI UX Pro Max; layout KPI/trend/table; stack: ${uiux || '(cập nhật nếu trống)'}.
+7) Testing: unit + integration (supertest) tối thiểu cho module chính.
+8) Liệt kê file sẽ tạo/chỉnh; sau đó mới sinh mã scaffold.
+
+Yêu cầu stack ưu tiên: ${stack || '(dùng mặc định kit)'}.
+
+Mô tả dự án (text + PDF trích xuất nếu có):
+"""
+${mergedDesc || '(chưa có mô tả - hãy yêu cầu bổ sung)'}
+"""
+`.trim();
+
+      output.textContent = prompt;
+    });
+  </script>
+</body>
+</html>
+

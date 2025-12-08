@@ -1,0 +1,74 @@
+Project: Automation & Data Analytics Platform (multi-region capable)
+Stack: Node.js/TypeScript, Python, PostgreSQL, Redis, n8n, Google Sheets, Cloudflare
+
+Dev setup:
+- npm install; npm run dev; npm run worker
+- python -m venv venv && venv\Scripts\activate; pip install -r requirements.txt
+- n8n: docker compose up n8n
+
+Build/Test:
+- npm run build; npm run test; npm run test:e2e
+- python -m pytest src/
+- npm run lint; npm run format; black src/; pylint src/
+
+Style:
+- TS strict; camelCase vars/functions, PascalCase classes, UPPER_SNAKE consts
+- 2-space TS, 4-space Py; max line length 100; semicolons + trailing commas
+
+API:
+- REST, OpenAPI at /api/docs; envelope { success, data, error? }
+- Errors: code + message; do not leak stack in prod
+
+Security:
+- Secrets only in .env.* (template .env.example committed)
+- Validate input; parameterized queries; HTTPS; rate limit; CORS allow-list
+
+DB:
+- PostgreSQL + migrations; index hot columns; avoid N+1; transactions for multi-step writes
+
+Patterns:
+- Controllers thin → services → repositories; error middleware centralized
+- n8n: Trigger → Fetch → Transform → Validate → Persist → Notify with retries/backoff
+- UI/UX: KPI cards + trends; clear states; show data freshness
+
+Git:
+- Branches feature/*, bugfix/*, release/*; commits conventional (e.g., feat(api): ...)
+
+# ⚠️ CRITICAL: Code Protection Rules
+
+BEFORE MODIFYING ANY CODE:
+1. Check for 🔒 PROTECTED markers
+2. Read .cursor/rules/code-preservation.md
+3. For bot/AI code, read .cursor/rules/ai-chatbot-rules.md
+
+PROTECTED CODE POLICY:
+- 🔒 PROTECTED sections = DO NOT modify without user approval
+- Always ASK before refactoring protected code
+- Show changes and wait for confirmation
+- Never remove business logic "to simplify"
+
+WHEN USER SAYS "improve" or "refactor":
+1. Identify protected sections first
+2. Show what you plan to change
+3. Explain impact
+4. Wait for explicit "yes, proceed"
+
+BOT/AI CODE RULES:
+- DO NOT change prompts without testing
+- DO NOT simplify RAG logic
+- DO NOT remove fallback handling
+- DO NOT skip validation
+- See .cursor/rules/ai-chatbot-rules.md
+
+SAFE OPERATIONS (no approval needed):
+- Add logging/comments
+- Fix typos
+- Add new features (append only)
+- Improve error messages
+
+DANGEROUS (always ask):
+- Refactor core logic
+- Remove existing code
+- Change function signatures
+- Modify prompts
+- Change API contracts
