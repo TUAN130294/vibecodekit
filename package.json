@@ -4,18 +4,25 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "init": "node scripts/init.js",
     "dev": "tsx watch src/server.ts",
     "dev:web": "next dev",
+    "dev:lite": "next dev",
+    "dev:pro": "docker-compose --profile pro up",
+    "dev:full": "docker-compose --profile full up",
     "build": "tsc -p tsconfig.json",
     "build:web": "next build",
     "start": "node dist/server.js",
     "start:web": "next start",
+    "deploy:vercel": "vercel --prod",
+    "deploy:docker": "docker-compose --profile pro up -d",
     "test": "jest --runInBand",
     "test:e2e": "jest --config jest.config.js --runInBand --testPathPattern=e2e",
     "lint": "eslint \"src/**/*.{ts,tsx}\"",
     "format": "prettier --write \"{src,tests}/**/*.{ts,tsx,js,json,md}\"",
     "worker": "ts-node src/worker.ts || echo \"worker stub\"",
-    "doctor": "node scripts/doctor.js"
+    "doctor": "node scripts/doctor.js",
+    "clean": "rm -rf .next node_modules dist .kit-config.json"
   },
   "dependencies": {
     "cors": "^2.8.5",

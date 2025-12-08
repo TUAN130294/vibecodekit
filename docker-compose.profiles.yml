@@ -1,0 +1,142 @@
+# Docker Compose with Profiles
+# Supports Lite and Pro modes
+#
+# Usage:
+#   Lite Mode:  docker-compose --profile lite up
+#   Pro Mode:   docker-compose --profile pro up
+#   Full Mode:  docker-compose --profile full up
+
+version: '3.8'
+
+services:
+  # ==========================================
+  # LITE MODE - Essential services only
+  # ==========================================
+
+  postgres:
+    image: postgres:16-alpine
+    profiles: ["lite", "pro", "full"]
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-myapp}
+      POSTGRES_USER: ${POSTGRES_USER:-admin}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./backups/postgres:/backups
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-admin}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    profiles: ["lite", "pro", "full"]
+    ports:
+      - "${APP_PORT:-3000}:3000"
+    environment:
+      NODE_ENV: ${NODE_ENV:-development}
+      DATABASE_URL: postgresql://${POSTGRES_USER:-admin}:${POSTGRES_PASSWORD:-changeme}@postgres:5432/${POSTGRES_DB:-myapp}
+      REDIS_URL: ${REDIS_URL:-redis://redis:6379}
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - .:/app
+      - /app/node_modules
+      - /app/.next
+    restart: unless-stopped
+
+  # ==========================================
+  # PRO MODE - Add Redis for caching
+  # ==========================================
+
+  redis:
+    image: redis:7-alpine
+    profiles: ["pro", "full"]
+    ports:
+      - "${REDIS_PORT:-6379}:6379"
+    volumes:
+      - redis_data:/data
+    command: redis-server --appendonly yes
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+    restart: unless-stopped
+
+  # ==========================================
+  # FULL MODE - All features enabled
+  # ==========================================
+
+  python-worker:
+    build:
+      context: ./services/python-worker
+      dockerfile: Dockerfile
+    profiles: ["full"]
+    environment:
+      DATABASE_URL: postgresql://${POSTGRES_USER:-admin}:${POSTGRES_PASSWORD:-changeme}@postgres:5432/${POSTGRES_DB:-myapp}
+      REDIS_URL: redis://redis:6379
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    volumes:
+      - ./services/python-worker:/app
+      - ./shared:/shared
+    restart: unless-stopped
+
+  n8n:
+    image: n8nio/n8n:latest
+    profiles: ["full"]
+    ports:
+      - "${N8N_PORT:-5678}:5678"
+    environment:
+      - N8N_BASIC_AUTH_ACTIVE=true
+      - N8N_BASIC_AUTH_USER=${N8N_USER:-admin}
+      - N8N_BASIC_AUTH_PASSWORD=${N8N_PASSWORD:-changeme}
+      - N8N_HOST=${N8N_HOST:-localhost}
+      - N8N_PORT=5678
+      - N8N_PROTOCOL=http
+      - WEBHOOK_URL=http://localhost:5678/
+    volumes:
+      - n8n_data:/home/node/.n8n
+      - ./n8n/workflows:/home/node/.n8n/workflows
+    restart: unless-stopped
+
+  # ==========================================
+  # OPTIONAL - Nginx reverse proxy
+  # ==========================================
+
+  nginx:
+    image: nginx:alpine
+    profiles: ["production"]
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/ssl:/etc/nginx/ssl:ro
+    depends_on:
+      - app
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+    driver: local
+  redis_data:
+    driver: local
+  n8n_data:
+    driver: local
+
+networks:
+  default:
+    name: universal-kit-network
+    driver: bridge

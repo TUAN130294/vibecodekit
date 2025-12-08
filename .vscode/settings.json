@@ -1,0 +1,124 @@
+{
+  // ==========================================
+  // Hide AI Config Files (Human-Friendly DX)
+  // ==========================================
+  "files.exclude": {
+    "**/.cursor": false,
+    "**/.agent": false,
+    "**/memory-bank": false,
+    "**/.git": true,
+    "**/.DS_Store": true,
+    "**/*.pyc": true,
+    "**/__pycache__": true,
+    "**/node_modules": true,
+    "**/.next": true,
+    "**/.vercel": true,
+    "**/.kit-config.json": false
+  },
+
+  // Toggle AI files visibility with Ctrl+Shift+P > "Toggle AI Files"
+  // Or manually set to true/false:
+  // "**/.cursor": true,  // Hide .cursor folder
+  // "**/.agent": true,   // Hide .agent folder
+  // "**/memory-bank": true,  // Hide memory-bank folder
+
+  // ==========================================
+  // Explorer Sorting (Organize better)
+  // ==========================================
+  "explorer.sortOrder": "mixed",
+  "explorer.fileNesting.enabled": true,
+  "explorer.fileNesting.expand": false,
+  "explorer.fileNesting.patterns": {
+    // Group related files together
+    "*.ts": "${capture}.js, ${capture}.d.ts, ${capture}.test.ts",
+    "*.tsx": "${capture}.test.tsx, ${capture}.stories.tsx",
+    "package.json": "package-lock.json, yarn.lock, pnpm-lock.yaml",
+    "tsconfig.json": "tsconfig.*.json",
+    "docker-compose.yml": "docker-compose.*.yml, Dockerfile",
+    ".env": ".env.*, .env.example",
+    "README.md": "LICENSE, CHANGELOG.md, CONTRIBUTING.md"
+  },
+
+  // ==========================================
+  // Code Formatting
+  // ==========================================
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit",
+    "source.organizeImports": "explicit"
+  },
+
+  // ==========================================
+  // TypeScript
+  // ==========================================
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "typescript.enablePromptUseWorkspaceTsdk": true,
+  "typescript.preferences.importModuleSpecifier": "relative",
+
+  // ==========================================
+  // Tailwind CSS IntelliSense
+  // ==========================================
+  "tailwindCSS.experimental.classRegex": [
+    ["cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"],
+    ["cx\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)"],
+    ["cn\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)"]
+  ],
+
+  // ==========================================
+  // Search Settings (Exclude build files)
+  // ==========================================
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/bower_components": true,
+    "**/*.code-search": true,
+    "**/.next": true,
+    "**/.vercel": true,
+    "**/dist": true,
+    "**/build": true
+  },
+
+  // ==========================================
+  // Git Settings
+  // ==========================================
+  "git.ignoreLimitWarning": true,
+  "git.autofetch": true,
+
+  // ==========================================
+  // Terminal
+  // ==========================================
+  "terminal.integrated.defaultProfile.windows": "Git Bash",
+  "terminal.integrated.fontSize": 14,
+
+  // ==========================================
+  // File Associations
+  // ==========================================
+  "files.associations": {
+    "*.css": "tailwindcss",
+    ".cursorrules": "markdown",
+    ".env.example": "dotenv"
+  },
+
+  // ==========================================
+  // Language Specific Settings
+  // ==========================================
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[markdown]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.wordWrap": "on"
+  },
+  "[python]": {
+    "editor.defaultFormatter": "ms-python.black-formatter"
+  }
+}
