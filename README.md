@@ -77,7 +77,6 @@ Includes: Node.js + TypeScript backend, React + Next.js frontend, Python automat
 - ✅ **56 Font Pairings** - Typography combinations
 - ✅ **24 Chart Types** - Data visualization components
 - ✅ **98 UX Guidelines** - Best practice patterns
-- Location: `ui-ux-pro-max-skill-main/` (one level, không lồng thư mục)
 
 ## Credits
 - UI/UX data and presets derived from UI UX Pro Max (MIT): https://github.com/nextlevelbuilder/ui-ux-pro-max-skill
