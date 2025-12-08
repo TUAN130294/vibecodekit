@@ -1,4 +1,6 @@
 import { Metadata } from 'next';
+import PromptGenerator from './components/PromptGenerator';
+import PlanGenerator from './components/PlanGenerator';
 
 export const metadata: Metadata = {
   title: 'Universal Kit - Guide & Tools',
@@ -31,7 +33,7 @@ export default function KitGuidePage() {
             </nav>
 
             <a
-              href="https://github.com/your-repo/universal-kit"
+              href="https://github.com/TUAN130294/vibecodekit"
               target="_blank"
               className="px-4 py-2 bg-gray-900 text-white rounded-lg hover:bg-gray-800 transition-colors"
             >
@@ -234,6 +236,57 @@ export default function KitGuidePage() {
         </div>
       </section>
 
+      {/* Embedded Docs (quick view) */}
+      <section className="py-16 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="max-w-5xl mx-auto space-y-6">
+            <div className="text-center mb-6">
+              <h3 className="text-3xl font-bold text-gray-900">Docs nhanh ngay tại đây</h3>
+              <p className="text-gray-600">Tóm tắt từ các file trong thư mục `docs/`</p>
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-6">
+              <div className="border-2 border-gray-200 rounded-2xl p-6 bg-gray-50">
+                <div className="flex items-center gap-2 mb-3">
+                  <span className="text-2xl">🚀</span>
+                  <h4 className="text-xl font-semibold text-gray-900">Quick Start (docs/quick-start.md)</h4>
+                </div>
+                <ul className="list-disc list-inside space-y-2 text-gray-700 text-sm">
+                  <li>Clone/copy kit, tạo file `.env.local` từ `.env.example`.</li>
+                  <li>Chạy `npm install` (Node) và thiết lập Python venv nếu cần.</li>
+                  <li>Dev backend: `npm run dev`; Dev web guide: `npm run dev:web` → `http://localhost:3000/kit-guide`.</li>
+                  <li>Docker full stack: `docker-compose up --build` (app, postgres, redis, n8n, python_worker).</li>
+                  <li>Tests: `npm test`; Lint: `npm run lint`; Doctor: `npm run doctor`.</li>
+                </ul>
+              </div>
+
+              <div className="border-2 border-gray-200 rounded-2xl p-6 bg-gray-50">
+                <div className="flex items-center gap-2 mb-3">
+                  <span className="text-2xl">🔒</span>
+                  <h4 className="text-xl font-semibold text-gray-900">Code Protection (docs/code-protection-guide.md)</h4>
+                </div>
+                <ul className="list-disc list-inside space-y-2 text-gray-700 text-sm">
+                  <li>Đánh dấu vùng nhạy cảm bằng comment 🔒 PROTECTED; tránh refactor khi chưa được duyệt.</li>
+                  <li>AI/bot phải đọc `.cursor/rules/code-preservation.md` trước khi chỉnh sửa.</li>
+                  <li>Không thay đổi logic bot/AI, prompt, RAG fallback; luôn giữ validation & retry.</li>
+                  <li>Refactor nguy hiểm: phải hỏi/duyệt trước; an toàn: thêm log, sửa typo, bổ sung test.</li>
+                  <li>Trước khi merge: chạy lint/test; kiểm tra diff không đụng vùng protected.</li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="border-2 border-dashed border-gray-200 rounded-2xl p-6 text-sm text-gray-700 bg-gray-50">
+              <p className="font-semibold mb-2">Gộp tài liệu:</p>
+              <p>
+                Trang này đã gộp chức năng Prompt & Plan; tài liệu chính được tóm tắt nhanh. Bạn vẫn có thể mở file gốc trong `docs/` khi cần chi tiết hoặc
+                chạy lệnh <code className="px-1 py-0.5 bg-white border rounded">vscode://file/docs/quick-start.md</code> để mở trực tiếp. Nếu muốn gọn repo,
+                bạn có thể bỏ `docs/prompt-web.html` (đã trùng chức năng) và dùng duy nhất trang `/kit-guide`.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Prompt Generator */}
       <section id="prompt-gen" className="py-20 bg-white">
         <div className="container mx-auto px-4">
@@ -242,84 +295,7 @@ export default function KitGuidePage() {
               <h2 className="text-4xl font-bold text-gray-900 mb-4">✨ AI Prompt Generator</h2>
               <p className="text-xl text-gray-600">Generate perfect prompts for your features</p>
             </div>
-
-            <div className="bg-gradient-to-br from-blue-50 to-purple-50 rounded-2xl p-8 border-2 border-blue-200">
-              <div className="space-y-6">
-                {/* Feature Type */}
-                <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">Feature Type</label>
-                  <select className="w-full px-4 py-3 rounded-xl border-2 border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition-all">
-                    <option value="">Select feature type...</option>
-                    <option value="component">React Component</option>
-                    <option value="page">Next.js Page</option>
-                    <option value="api">API Endpoint (REST)</option>
-                    <option value="graphql">GraphQL Resolver</option>
-                    <option value="crud">Full CRUD Feature</option>
-                    <option value="bot">AI Chatbot</option>
-                    <option value="automation">Automation Script</option>
-                    <option value="dashboard">BI Dashboard</option>
-                  </select>
-                </div>
-
-                {/* Feature Name */}
-                <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">Feature Name</label>
-                  <input
-                    type="text"
-                    placeholder="e.g., User Profile Card, Product API, Revenue Dashboard"
-                    className="w-full px-4 py-3 rounded-xl border-2 border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition-all"
-                  />
-                </div>
-
-                {/* Description */}
-                <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">Description</label>
-                  <textarea
-                    rows={4}
-                    placeholder="Describe what you want to build... Include requirements, functionality, and any specific details."
-                    className="w-full px-4 py-3 rounded-xl border-2 border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition-all resize-none"
-                  />
-                </div>
-
-                {/* Options */}
-                <div className="grid md:grid-cols-2 gap-4">
-                  <label className="flex items-center gap-3 px-4 py-3 bg-white rounded-xl border-2 border-gray-200 cursor-pointer hover:border-blue-400 transition-colors">
-                    <input type="checkbox" className="w-5 h-5 text-blue-600" />
-                    <span className="text-sm font-medium text-gray-700">Include Tests</span>
-                  </label>
-                  <label className="flex items-center gap-3 px-4 py-3 bg-white rounded-xl border-2 border-gray-200 cursor-pointer hover:border-blue-400 transition-colors">
-                    <input type="checkbox" className="w-5 h-5 text-blue-600" />
-                    <span className="text-sm font-medium text-gray-700">TypeScript Strict</span>
-                  </label>
-                  <label className="flex items-center gap-3 px-4 py-3 bg-white rounded-xl border-2 border-gray-200 cursor-pointer hover:border-blue-400 transition-colors">
-                    <input type="checkbox" className="w-5 h-5 text-blue-600" />
-                    <span className="text-sm font-medium text-gray-700">Accessibility (a11y)</span>
-                  </label>
-                  <label className="flex items-center gap-3 px-4 py-3 bg-white rounded-xl border-2 border-gray-200 cursor-pointer hover:border-blue-400 transition-colors">
-                    <input type="checkbox" className="w-5 h-5 text-blue-600" />
-                    <span className="text-sm font-medium text-gray-700">Documentation</span>
-                  </label>
-                </div>
-
-                {/* Generate Button */}
-                <button className="w-full px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl font-semibold hover:shadow-xl hover:-translate-y-0.5 transition-all">
-                  Generate Prompt ✨
-                </button>
-
-                {/* Generated Prompt Preview */}
-                <div className="bg-white rounded-xl p-6 border-2 border-gray-200">
-                  <div className="flex items-center justify-between mb-4">
-                    <h3 className="font-semibold text-gray-900">Generated Prompt</h3>
-                    <button className="px-3 py-1 bg-gray-100 hover:bg-gray-200 rounded-lg text-sm font-medium transition-colors">
-                      Copy
-                    </button>
-                  </div>
-                  <div className="bg-gray-50 rounded-lg p-4 font-mono text-sm text-gray-700 leading-relaxed">
-                    <p className="text-gray-500 italic">Your generated prompt will appear here...</p>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <PromptGenerator />
           </div>
         </div>
       </section>
@@ -332,88 +308,7 @@ export default function KitGuidePage() {
               <h2 className="text-4xl font-bold text-gray-900 mb-4">📋 Implementation Plan Generator</h2>
               <p className="text-xl text-gray-600">Create detailed implementation roadmap</p>
             </div>
-
-            <div className="bg-white rounded-2xl p-8 border-2 border-gray-200 shadow-lg">
-              <div className="space-y-6">
-                {/* Project Name */}
-                <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">Project/Feature Name</label>
-                  <input
-                    type="text"
-                    placeholder="e.g., SOP Management System"
-                    className="w-full px-4 py-3 rounded-xl border-2 border-gray-300 focus:border-purple-500 focus:ring-2 focus:ring-purple-200 outline-none transition-all"
-                  />
-                </div>
-
-                {/* Scope */}
-                <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">Project Scope</label>
-                  <textarea
-                    rows={6}
-                    placeholder="Describe your project scope, features, and requirements..."
-                    className="w-full px-4 py-3 rounded-xl border-2 border-gray-300 focus:border-purple-500 focus:ring-2 focus:ring-purple-200 outline-none transition-all resize-none"
-                  />
-                </div>
-
-                {/* Timeline */}
-                <div className="grid md:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-sm font-semibold text-gray-700 mb-2">Team Size</label>
-                    <select className="w-full px-4 py-3 rounded-xl border-2 border-gray-300 focus:border-purple-500 outline-none">
-                      <option>1 developer</option>
-                      <option>2 developers</option>
-                      <option>3-5 developers</option>
-                      <option>6-10 developers</option>
-                    </select>
-                  </div>
-                  <div>
-                    <label className="block text-sm font-semibold text-gray-700 mb-2">Timeline</label>
-                    <select className="w-full px-4 py-3 rounded-xl border-2 border-gray-300 focus:border-purple-500 outline-none">
-                      <option>1-2 weeks</option>
-                      <option>1 month</option>
-                      <option>2-3 months</option>
-                      <option>3-6 months</option>
-                    </select>
-                  </div>
-                </div>
-
-                {/* Tech Stack */}
-                <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">Tech Stack Preferences</label>
-                  <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-                    {['React', 'Next.js', 'TypeScript', 'PostgreSQL', 'MongoDB', 'Prisma', 'GraphQL', 'Python', 'n8n'].map((tech) => (
-                      <label key={tech} className="flex items-center gap-2 px-3 py-2 bg-gray-50 rounded-lg border-2 border-gray-200 cursor-pointer hover:border-purple-400 transition-colors">
-                        <input type="checkbox" className="w-4 h-4 text-purple-600" defaultChecked={['React', 'Next.js', 'TypeScript', 'PostgreSQL'].includes(tech)} />
-                        <span className="text-sm font-medium text-gray-700">{tech}</span>
-                      </label>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Generate Button */}
-                <button className="w-full px-8 py-4 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-xl font-semibold hover:shadow-xl hover:-translate-y-0.5 transition-all">
-                  Generate Implementation Plan 📋
-                </button>
-
-                {/* Generated Plan Preview */}
-                <div className="bg-gray-50 rounded-xl p-6 border-2 border-gray-200">
-                  <div className="flex items-center justify-between mb-4">
-                    <h3 className="font-semibold text-gray-900">Implementation Plan</h3>
-                    <div className="flex gap-2">
-                      <button className="px-3 py-1 bg-white hover:bg-gray-100 rounded-lg text-sm font-medium border transition-colors">
-                        Download
-                      </button>
-                      <button className="px-3 py-1 bg-white hover:bg-gray-100 rounded-lg text-sm font-medium border transition-colors">
-                        Copy
-                      </button>
-                    </div>
-                  </div>
-                  <div className="space-y-4 text-sm text-gray-700">
-                    <p className="text-gray-500 italic">Your implementation plan will appear here...</p>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <PlanGenerator />
           </div>
         </div>
       </section>
