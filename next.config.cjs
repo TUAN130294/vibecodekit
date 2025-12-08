@@ -4,6 +4,8 @@ const path = require('path');
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
+  // Enable standalone output for Docker deployment
+  output: 'standalone',
   // Fix Windows path resolution issues
   webpack: (config, { isServer }) => {
     // Ensure proper path resolution on Windows

@@ -4,17 +4,28 @@
 
 Includes: Node.js + TypeScript backend, React + Next.js frontend, Python automation/ML, n8n workflows, PostgreSQL/MongoDB/Redis, GraphQL, AWS deployment, and comprehensive UI/UX guidance.
 
-## ✨ What's New in Universal Kit
+## ✨ What's New - Universal Kit 2.0
 
-### 🎯 Phase 1: Core 80% (Recently Added)
+### 🎯 Modular Architecture (LEGO System)
+- **Lite Mode** - Serverless deployment, $0/month, 5 minutes setup
+- **Pro Mode** - Docker with all services, $20-50/month
+- **Smart CLI Init** - Choose only what you need with `npm run init`
+- **Auto Cleanup** - Removes unused modules to keep project clean
+
+### 💰 Serverless First (NEW!)
+- **Zero Cost Start** - Vercel + Supabase free tier
+- **Scale Gradually** - $0 → $20 → $100+ as you grow
+- **Easy Upgrade** - Lite → Pro in 2 hours with migration guide
+
+### 🎯 Phase 1: Core 80%
 - **Frontend Rules**: React, Next.js 14, Tailwind CSS best practices
 - **AI Agent System**: Code reviewer, test generator, refactoring assistant
 - **Code Templates**: React components, API endpoints, full CRUD features
 - **Database Support**: MongoDB (Mongoose), Prisma ORM (in addition to TypeORM)
 - **GraphQL**: Complete GraphQL API setup with Apollo Server
-- **AWS Deployment**: EC2, ECS/Fargate, Lambda, Elastic Beanstalk guides
-- **Vibecoder Config**: Optimized for AI-assisted development
-- **Quick Start Guide**: Get running in 5 minutes
+- **Deployment**: Serverless (Vercel), Docker, AWS (EC2, ECS, Lambda)
+- **Code Protection**: Prevent AI from breaking critical code
+- **Human-Friendly DX**: Clean project structure, hidden AI configs
 
 ## 🎁 Features
 
@@ -83,60 +94,93 @@ Includes: Node.js + TypeScript backend, React + Next.js frontend, Python automat
 
 ## 🚀 Quick Start
 
-### 1. Install Dependencies
+### Option 1: Lite Mode (Serverless - Recommended for Beginners)
+
+**Cost: $0/month | Setup: 5 minutes**
+
 ```bash
-# Node.js dependencies
+# 1. Install dependencies
 npm install
 
-# Python dependencies (optional, for ML/automation)
-python -m venv venv
-source venv/bin/activate  # Windows: venv\Scripts\activate
-pip install -r requirements.txt
+# 2. Run smart initializer
+npm run init
+# Choose: Lite Mode
+# Select features you need
+
+# 3. Start development
+npm run dev:lite
+# Opens http://localhost:3000
+
+# 4. Deploy for free (when ready)
+npm run deploy:vercel
 ```
 
-### 2. Environment Setup
+**Windows Users:**
+- Double-click `INIT_PROJECT.bat` to initialize
+- Double-click `RUN_WEB.bat` to start coding
+
+**📚 Lite Mode Guide:**
+- [Serverless Deployment (Vercel + Supabase)](docs/serverless-deployment.md) - Deploy for $0
+- [Kit Guide Web UI](http://localhost:3000/kit-guide) - Interactive documentation
+
+---
+
+### Option 2: Pro Mode (Docker - For Production)
+
+**Cost: $20-50/month | Setup: 20 minutes**
+
 ```bash
-# Copy environment template
-cp .env.example .env.local
+# 1. Install dependencies
+npm install
 
-# Edit .env.local with your values
-# Required: DATABASE_URL, JWT_SECRET
+# 2. Run smart initializer
+npm run init
+# Choose: Pro Mode
+# Select all features you need
+
+# 3. Start with Docker (all services)
+npm run dev:pro
+# Starts: PostgreSQL, Redis, Next.js app
+# OR
+npm run dev:full
+# Starts: All above + Python workers + n8n
+
+# 4. Deploy to server
+npm run deploy:docker
 ```
 
-### 3. Database Setup
-```bash
-# Start services (PostgreSQL, Redis, n8n)
-docker-compose up -d
+**📚 Pro Mode Guides:**
+- [Lite to Pro Upgrade](docs/lite-to-pro-upgrade.md) - Migrate from serverless
+- [Docker Setup](docs/quick-start.md) - Self-hosted deployment
 
-# Run migrations
-npx prisma migrate dev
-# OR for TypeORM
-npm run typeorm migration:run
-```
+---
 
-### 4. Start Development
+### 🎯 What's the Difference?
 
-**🌐 Cách đơn giản nhất (Windows):**
-- Tìm file `🚀 CHẠY WEB.bat` hoặc `SETUP_WEBSITE.bat` ở thư mục gốc
-- Double-click vào file đó → Web sẽ tự động chạy và mở trình duyệt
-- Xem `HƯỚNG DẪN CHẠY WEB.txt` để biết thêm chi tiết
+| Feature | Lite Mode | Pro Mode |
+|---------|-----------|----------|
+| **Cost** | $0/month | $20-50/month |
+| **Setup Time** | 5 minutes | 20 minutes |
+| **Stack** | Next.js + Supabase | Docker + All Services |
+| **Scale** | Auto (serverless) | Manual (VPS) |
+| **Best For** | MVPs, Learning, Side Projects | Production, Teams, High Traffic |
 
-**💻 Command Line:**
-```bash
-# Start dev server
-npm run dev
+**💡 Recommendation:**
+- **Start Lite** → Deploy for free → Get users → **Upgrade to Pro** when needed
 
-# Start web guide (Next.js)
-npm run dev:web
+---
 
-# Start worker (optional)
-npm run worker
+### 📖 Next Steps
 
-# Access at http://localhost:3000
-# Web guide at http://localhost:3000/kit-guide
-```
+1. **Initialize Project:** `npm run init` or double-click `INIT_PROJECT.bat`
+2. **Start Coding:** `npm run dev:lite` or double-click `RUN_WEB.bat`
+3. **Explore Kit Guide:** Open [http://localhost:3000/kit-guide](http://localhost:3000/kit-guide)
+4. **Generate Features:** Use Prompt Generator & Plan Generator tools
 
-**📖 Full guide**: See [docs/quick-start.md](docs/quick-start.md)
+**📖 Full Documentation:**
+- [Quick Start Guide](docs/quick-start.md) - Detailed setup instructions
+- [Serverless Deployment](docs/serverless-deployment.md) - Free hosting guide
+- [Lite to Pro Upgrade](docs/lite-to-pro-upgrade.md) - Scaling guide
 
 ## 📁 Project Structure
 

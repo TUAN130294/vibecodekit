@@ -11,3 +11,9 @@ __pycache__/
 /.turbo
 /.next
 
+# Generated config
+.kit-config.json
+
+# OS
+Thumbs.db
+
