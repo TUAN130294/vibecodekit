@@ -116,14 +116,25 @@ npm run typeorm migration:run
 ```
 
 ### 4. Start Development
+
+**🌐 Cách đơn giản nhất (Windows):**
+- Tìm file `🚀 CHẠY WEB.bat` hoặc `SETUP_WEBSITE.bat` ở thư mục gốc
+- Double-click vào file đó → Web sẽ tự động chạy và mở trình duyệt
+- Xem `HƯỚNG DẪN CHẠY WEB.txt` để biết thêm chi tiết
+
+**💻 Command Line:**
 ```bash
 # Start dev server
 npm run dev
+
+# Start web guide (Next.js)
+npm run dev:web
 
 # Start worker (optional)
 npm run worker
 
 # Access at http://localhost:3000
+# Web guide at http://localhost:3000/kit-guide
 ```
 
 **📖 Full guide**: See [docs/quick-start.md](docs/quick-start.md)

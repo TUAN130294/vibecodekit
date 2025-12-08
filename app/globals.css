@@ -2,9 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
+  --foreground-rgb: 15, 23, 42;
+  --background-start-rgb: 248, 250, 252;
   --background-end-rgb: 255, 255, 255;
 }
 
@@ -12,9 +14,32 @@ body {
   color: rgb(var(--foreground-rgb));
   background: linear-gradient(
       to bottom,
-      transparent,
+      rgb(var(--background-start-rgb)),
       rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+    );
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+/* Bento Grid Styles */
+@layer components {
+  .bento-card {
+    @apply bg-white rounded-bento border border-gray-200/60 shadow-bento hover:shadow-bento-lg transition-all duration-300;
+  }
+  
+  .bento-card-glass {
+    @apply bg-white/80 backdrop-blur-md border border-white/20 shadow-bento;
+  }
+  
+  .gradient-primary {
+    @apply bg-gradient-to-br from-primary-500 to-accent-600;
+  }
+  
+  .gradient-success {
+    @apply bg-gradient-to-br from-success-500 to-success-600;
+  }
+  
+  .text-gradient {
+    @apply bg-gradient-to-r from-primary-600 to-accent-600 bg-clip-text text-transparent;
+  }
 }
 

@@ -15,10 +15,26 @@
     "types": [
       "node",
       "jest"
+    ],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "allowJs": true,
+    "noEmit": true,
+    "incremental": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "plugins": [
+      {
+        "name": "next"
+      }
     ]
   },
   "include": [
-    "src"
+    "src",
+    ".next/types/**/*.ts"
   ],
   "exclude": [
     "node_modules",
