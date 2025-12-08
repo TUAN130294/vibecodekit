@@ -30,10 +30,20 @@
       {
         "name": "next"
       }
-    ]
+    ],
+    "paths": {
+      "@/*": ["./*"],
+      "@/app/*": ["./app/*"],
+      "@/lib/*": ["./lib/*"],
+      "@/components/*": ["./components/*"]
+    },
+    "baseUrl": "."
   },
   "include": [
     "src",
+    "app",
+    "lib",
+    "components",
     ".next/types/**/*.ts"
   ],
   "exclude": [
