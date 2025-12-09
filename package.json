@@ -6,6 +6,7 @@
   "scripts": {
     "init": "node scripts/init.js",
     "init:from-config": "node scripts/init-from-config.js",
+    "setup": "node scripts/setup-new-project.js",
     "dev": "tsx watch src/server.ts",
     "dev:web": "npx next dev",
     "dev:lite": "npx next dev",
