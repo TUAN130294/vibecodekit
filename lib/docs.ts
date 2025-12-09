@@ -11,6 +11,7 @@ export interface DocContent {
 }
 
 const docsRoot = path.join(process.cwd(), 'vibekit', 'docs');
+const memoryBankRoot = path.join(process.cwd(), 'vibekit', 'memory-bank');
 
 function normalizeSlug(slug: string | string[] | undefined): string {
   if (!slug || (Array.isArray(slug) && slug.length === 0)) return 'quick-start';
@@ -18,13 +19,21 @@ function normalizeSlug(slug: string | string[] | undefined): string {
 }
 
 function resolvePath(slug: string) {
-  // allow cross-folder markdown (e.g., memory-bank)
-  const absolute = path.isAbsolute(slug)
-    ? slug
-    : path.join(process.cwd(), slug.endsWith('.md') ? slug : `${slug}.md`);
+  const normalized = slug.endsWith('.md') ? slug : `${slug}.md`;
+
+  // 1) absolute path
+  const absolute = path.isAbsolute(slug) ? slug : path.join(process.cwd(), normalized);
   if (fs.existsSync(absolute)) return absolute;
-  const inDocs = path.join(docsRoot, slug.endsWith('.md') ? slug : `${slug}.md`);
-  return inDocs;
+
+  // 2) search known roots
+  const roots = [docsRoot, memoryBankRoot];
+  for (const root of roots) {
+    const candidate = path.join(root, normalized);
+    if (fs.existsSync(candidate)) return candidate;
+  }
+
+  // 3) fallback to docsRoot even if missing (for notFound)
+  return path.join(docsRoot, normalized);
 }
 
 function extractHeadings(markdown: string) {
