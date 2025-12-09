@@ -20,20 +20,26 @@ function normalizeSlug(slug: string | string[] | undefined): string {
 
 function resolvePath(slug: string) {
   const normalized = slug.endsWith('.md') ? slug : `${slug}.md`;
+  const slugInMemory = normalized.startsWith('memory-bank/')
+    ? normalized.replace(/^memory-bank\//, '')
+    : normalized;
 
   // 1) absolute path
   const absolute = path.isAbsolute(slug) ? slug : path.join(process.cwd(), normalized);
   if (fs.existsSync(absolute)) return absolute;
 
-  // 2) search known roots
-  const roots = [docsRoot, memoryBankRoot];
-  for (const root of roots) {
-    const candidate = path.join(root, normalized);
+  // 2) candidates in known roots
+  const candidates = [
+    path.join(docsRoot, normalized),
+    path.join(memoryBankRoot, slugInMemory)
+  ];
+
+  for (const candidate of candidates) {
     if (fs.existsSync(candidate)) return candidate;
   }
 
   // 3) fallback to docsRoot even if missing (for notFound)
-  return path.join(docsRoot, normalized);
+  return candidates[0];
 }
 
 function extractHeadings(markdown: string) {
