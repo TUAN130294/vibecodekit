@@ -64,8 +64,8 @@ export default function DocsLayout({ children }: { children: React.ReactNode }) 
           </div>
         </aside>
 
-        <main className="lg:col-span-1">
-          <div className="rounded-2xl border border-white/10 bg-slate-900/80 p-8 shadow-xl shadow-black/30">
+        <main className="lg:col-span-1 flex justify-center">
+          <div className="w-full max-w-4xl rounded-2xl border border-white/10 bg-slate-900/85 p-8 shadow-2xl shadow-black/40">
             {children}
           </div>
         </main>
