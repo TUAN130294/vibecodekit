@@ -89,16 +89,66 @@ function KitGuideContent() {
   ];
 
   const docs = [
-    { title: 'Docs Hub', href: '/docs/quick-start', icon: '📚', time: 'Hub' },
-    { title: 'Quick Start', href: '/docs/quick-start', icon: '🚀', time: '5 min' },
-    { title: 'Setup New Project', href: '/docs/setup-new-project', icon: '🛠️', time: '8 min' },
-    { title: 'Memory Bank Workflow', href: '/docs/memory-bank-workflow', icon: '🧠', time: '7 min' },
-    { title: 'Python Worker Automation', href: '/docs/python-worker-automation', icon: '🤖', time: '7 min' },
-    { title: 'Doctor & Rules', href: '/docs/doctor-and-rules', icon: '🩺', time: '5 min' },
-    { title: 'CLI & Scripts', href: '/docs/cli-tools', icon: '⌨️', time: '5 min' },
-    { title: 'Code Protection', href: '/docs/code-protection-guide', icon: '🛡️', time: '10 min' },
-    { title: 'Agents Config', href: '/docs/AGENTS', icon: '🧩', time: '10 min' },
-    { title: 'Why VibeCodeKit', href: '/docs/why-vibecodekit', icon: '✨', time: '4 min' },
+    {
+      title: { vi: 'Docs Hub', en: 'Docs Hub' },
+      href: '/docs/quick-start',
+      icon: '📚',
+      time: 'Hub',
+    },
+    {
+      title: { vi: 'Bắt đầu nhanh', en: 'Quick Start' },
+      href: '/docs/quick-start',
+      icon: '🚀',
+      time: '5 min',
+    },
+    {
+      title: { vi: 'Thiết lập dự án', en: 'Setup New Project' },
+      href: '/docs/setup-new-project',
+      icon: '🛠️',
+      time: '8 min',
+    },
+    {
+      title: { vi: 'Memory Bank Workflow', en: 'Memory Bank Workflow' },
+      href: '/docs/memory-bank-workflow',
+      icon: '🧠',
+      time: '7 min',
+    },
+    {
+      title: { vi: 'Python Worker Automation', en: 'Python Worker Automation' },
+      href: '/docs/python-worker-automation',
+      icon: '🤖',
+      time: '7 min',
+    },
+    {
+      title: { vi: 'Doctor & Rules', en: 'Doctor & Rules' },
+      href: '/docs/doctor-and-rules',
+      icon: '🩺',
+      time: '5 min',
+    },
+    {
+      title: { vi: 'CLI & Scripts', en: 'CLI & Scripts' },
+      href: '/docs/cli-tools',
+      icon: '⌨️',
+      time: '5 min',
+    },
+    {
+      title: { vi: 'Bảo vệ Code', en: 'Code Protection' },
+      href: '/docs/code-protection-guide',
+      icon: '🛡️',
+      time: '10 min',
+    },
+    {
+      title: { vi: 'Cấu hình Agents', en: 'Agents Config' },
+      href: '/docs/AGENTS',
+      icon: '🧩',
+      time: '10 min',
+    },
+    {
+      title: { vi: 'Vì sao VibeCodeKit?', en: 'Why VibeCodeKit' },
+      href: '/docs/why-vibecodekit',
+      icon: '✨',
+      time: '4 min',
+    },
   ];
 
   const commands = [
@@ -136,6 +186,13 @@ function KitGuideContent() {
             <div className="flex items-center gap-4">
               <LanguageToggle />
               <a
+              href="/docs/quick-start"
+              target="_blank"
+              className="hidden md:flex px-5 py-2.5 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl hover:shadow-lg transition-all font-semibold shadow-md hover:-translate-y-0.5"
+            >
+              {t('nav.docsHub')}
+            </a>
+            <a
                 href="https://github.com/TUAN130294/vibecodekit"
                 target="_blank"
                 className="hidden md:flex px-5 py-2.5 bg-gray-900 text-white rounded-xl hover:bg-gray-800 transition-all font-semibold shadow-md hover:shadow-lg"
@@ -184,10 +241,10 @@ function KitGuideContent() {
                 {t('hero.cta1')}
               </a>
               <a
-                href="#features"
+                href="/docs/quick-start"
                 className="px-8 py-4 bg-white text-gray-900 rounded-xl font-semibold hover:shadow-xl hover:-translate-y-0.5 transition-all border-2 border-gray-200 hover:border-blue-300"
               >
-                {t('hero.cta2')}
+                {language === 'vi' ? 'Xem Docs Hub' : 'View Docs Hub'}
               </a>
             </div>
           </div>
@@ -262,7 +319,7 @@ function KitGuideContent() {
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               {docs.map(doc => (
                 <a
-                  key={doc.title}
+                  key={doc.href}
                   href={doc.href}
                   target="_blank"
                   className="bg-white/80 backdrop-blur-sm p-6 rounded-2xl border border-gray-200/50 shadow-lg hover:-translate-y-1 group hover:shadow-xl transition-all"
@@ -273,7 +330,9 @@ function KitGuideContent() {
                       {doc.time}
                     </span>
                   </div>
-                  <h3 className="text-lg font-bold text-gray-900 mb-2">{doc.title}</h3>
+                  <h3 className="text-lg font-bold text-gray-900 mb-2">
+                    {language === 'vi' ? doc.title.vi : doc.title.en}
+                  </h3>
                   <p className="text-sm text-blue-600 font-semibold group-hover:underline">
                     {language === 'vi' ? 'Xem tài liệu' : 'View doc'}
                   </p>

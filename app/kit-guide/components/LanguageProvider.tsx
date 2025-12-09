@@ -43,6 +43,10 @@ export const translations: Translations = {
         vi: 'Tạo Kế hoạch',
         en: 'Plan Gen',
     },
+    'nav.docsHub': {
+        vi: 'Xem Docs',
+        en: 'View Docs',
+    },
     'nav.customize': {
         vi: 'Tùy chỉnh',
         en: 'Customize',
