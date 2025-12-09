@@ -116,8 +116,8 @@ npm run deploy:vercel
 ```
 
 **Windows Users:**
-- Double-click `INIT_PROJECT.bat` to initialize
-- Double-click `RUN_WEB.bat` to start coding
+- Double-click `vibekit/scripts/INIT_PROJECT.bat` to initialize
+- Double-click `vibekit/scripts/RUN_WEB.bat` to start coding
 
 **📚 Lite Mode Guide:**
 - [Serverless Deployment (Vercel + Supabase)](docs/serverless-deployment.md) - Deploy for $0
@@ -172,8 +172,8 @@ npm run deploy:docker
 
 ### 📖 Next Steps
 
-1. **Initialize Project:** `npm run init` or double-click `INIT_PROJECT.bat`
-2. **Start Coding:** `npm run dev:lite` or double-click `RUN_WEB.bat`
+1. **Initialize Project:** `npm run init` or double-click `vibekit/scripts/INIT_PROJECT.bat`
+2. **Start Coding:** `npm run dev:lite` or double-click `vibekit/scripts/RUN_WEB.bat`
 3. **Explore Kit Guide:** Open [http://localhost:3000/kit-guide](http://localhost:3000/kit-guide)
 4. **Generate Features:** Use Prompt Generator & Plan Generator tools
 
