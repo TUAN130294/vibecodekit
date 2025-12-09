@@ -13,6 +13,7 @@
 - DONE: Active Context guardrail (rule + pre-commit warning)
 - DONE: Security guardrails doc + env leak checks in doctor
 - DONE: REST bridge scaffolding Next.js ↔ Python worker
+- DONE: Docs hub blueprint + implementation (sidebar, TOC, FS markdown)
 - TODO: Testing
 - TODO: Deployment
 - BLOCKED: None noted (generic template)
