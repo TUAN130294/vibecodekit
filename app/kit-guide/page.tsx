@@ -1,12 +1,19 @@
 'use client';
 
+import { useState } from 'react';
 import { LanguageProvider, LanguageToggle, useLanguage } from './components/LanguageProvider';
-import PromptGenerator from './components/PromptGenerator';
 import PlanGenerator from './components/PlanGenerator';
+import PromptGenerator from './components/PromptGenerator';
 
 // Main content component that uses translations
 function KitGuideContent() {
   const { t, language } = useLanguage();
+  
+  // State for customization options
+  const [database, setDatabase] = useState('PostgreSQL + TypeORM');
+  const [apiStyle, setApiStyle] = useState('REST API');
+  const [deployment, setDeployment] = useState('Self-Hosted (Docker)');
+  const [selectedFeatures, setSelectedFeatures] = useState<string[]>(['AI Chatbot', 'Automation (n8n)', 'BI Dashboard', 'Code Protection']);
 
   const stats = [
     { label: t('stats.rulesFiles'), value: '26+', icon: '📋', color: 'from-blue-500 to-blue-600' },
@@ -492,11 +499,23 @@ function KitGuideContent() {
             <div className="grid md:grid-cols-2 gap-6">
               {/* Database Choice */}
               <div className="bg-gradient-to-br from-slate-50 to-gray-50 rounded-2xl p-6 border border-gray-200/50 shadow-lg">
-                <h3 className="text-lg font-bold text-gray-900 mb-4">{t('customize.database')}</h3>
+                <div className="flex items-center gap-2 mb-4">
+                  <span className="text-2xl">🗄️</span>
+                  <h3 className="text-lg font-bold text-gray-900">{t('customize.database')}</h3>
+                </div>
                 <div className="space-y-3">
                   {['PostgreSQL + TypeORM', 'PostgreSQL + Prisma', 'MongoDB + Mongoose'].map((db) => (
-                    <label key={db} className="flex items-center gap-3 px-4 py-3 bg-white rounded-xl border-2 border-gray-200 cursor-pointer hover:border-blue-400 transition-colors">
-                      <input type="radio" name="database" className="w-4 h-4 text-blue-600" defaultChecked={db.includes('Prisma')} />
+                    <label key={db} className={`flex items-center gap-3 px-4 py-3 bg-white rounded-xl border-2 cursor-pointer transition-colors ${
+                      database === db ? 'border-blue-500 bg-blue-50' : 'border-gray-200 hover:border-blue-400'
+                    }`}>
+                      <input 
+                        type="radio" 
+                        name="database" 
+                        value={db}
+                        checked={database === db}
+                        onChange={(e) => setDatabase(e.target.value)}
+                        className="w-4 h-4 text-blue-600" 
+                      />
                       <span className="text-sm font-medium text-gray-700">{db}</span>
                     </label>
                   ))}
@@ -505,11 +524,23 @@ function KitGuideContent() {
 
               {/* API Style */}
               <div className="bg-gradient-to-br from-slate-50 to-gray-50 rounded-2xl p-6 border border-gray-200/50 shadow-lg">
-                <h3 className="text-lg font-bold text-gray-900 mb-4">{t('customize.api')}</h3>
+                <div className="flex items-center gap-2 mb-4">
+                  <span className="text-2xl">💎</span>
+                  <h3 className="text-lg font-bold text-gray-900">{t('customize.api')}</h3>
+                </div>
                 <div className="space-y-3">
                   {['REST API', 'GraphQL', 'Both REST + GraphQL'].map((api) => (
-                    <label key={api} className="flex items-center gap-3 px-4 py-3 bg-white rounded-xl border-2 border-gray-200 cursor-pointer hover:border-blue-400 transition-colors">
-                      <input type="radio" name="api" className="w-4 h-4 text-blue-600" defaultChecked={api === 'REST API'} />
+                    <label key={api} className={`flex items-center gap-3 px-4 py-3 bg-white rounded-xl border-2 cursor-pointer transition-colors ${
+                      apiStyle === api ? 'border-blue-500 bg-blue-50' : 'border-gray-200 hover:border-blue-400'
+                    }`}>
+                      <input 
+                        type="radio" 
+                        name="api" 
+                        value={api}
+                        checked={apiStyle === api}
+                        onChange={(e) => setApiStyle(e.target.value)}
+                        className="w-4 h-4 text-blue-600" 
+                      />
                       <span className="text-sm font-medium text-gray-700">{api}</span>
                     </label>
                   ))}
@@ -518,11 +549,23 @@ function KitGuideContent() {
 
               {/* Deployment */}
               <div className="bg-gradient-to-br from-slate-50 to-gray-50 rounded-2xl p-6 border border-gray-200/50 shadow-lg">
-                <h3 className="text-lg font-bold text-gray-900 mb-4">{t('customize.deployment')}</h3>
+                <div className="flex items-center gap-2 mb-4">
+                  <span className="text-2xl">🚀</span>
+                  <h3 className="text-lg font-bold text-gray-900">{t('customize.deployment')}</h3>
+                </div>
                 <div className="space-y-3">
                   {['Self-Hosted (Docker)', 'AWS Elastic Beanstalk', 'AWS ECS + Fargate', 'AWS Lambda'].map((deploy) => (
-                    <label key={deploy} className="flex items-center gap-3 px-4 py-3 bg-white rounded-xl border-2 border-gray-200 cursor-pointer hover:border-blue-400 transition-colors">
-                      <input type="radio" name="deploy" className="w-4 h-4 text-blue-600" defaultChecked={deploy.includes('Docker')} />
+                    <label key={deploy} className={`flex items-center gap-3 px-4 py-3 bg-white rounded-xl border-2 cursor-pointer transition-colors ${
+                      deployment === deploy ? 'border-blue-500 bg-blue-50' : 'border-gray-200 hover:border-blue-400'
+                    }`}>
+                      <input 
+                        type="radio" 
+                        name="deploy" 
+                        value={deploy}
+                        checked={deployment === deploy}
+                        onChange={(e) => setDeployment(e.target.value)}
+                        className="w-4 h-4 text-blue-600" 
+                      />
                       <span className="text-sm font-medium text-gray-700">{deploy}</span>
                     </label>
                   ))}
@@ -531,11 +574,27 @@ function KitGuideContent() {
 
               {/* Features */}
               <div className="bg-gradient-to-br from-slate-50 to-gray-50 rounded-2xl p-6 border border-gray-200/50 shadow-lg">
-                <h3 className="text-lg font-bold text-gray-900 mb-4">{t('customize.features')}</h3>
+                <div className="flex items-center gap-2 mb-4">
+                  <span className="text-2xl">✨</span>
+                  <h3 className="text-lg font-bold text-gray-900">{t('customize.features')}</h3>
+                </div>
                 <div className="space-y-3">
                   {['AI Chatbot', 'Automation (n8n)', 'BI Dashboard', 'Code Protection'].map((feature) => (
-                    <label key={feature} className="flex items-center gap-3 px-4 py-3 bg-white rounded-xl border-2 border-gray-200 cursor-pointer hover:border-blue-400 transition-colors">
-                      <input type="checkbox" className="w-4 h-4 text-blue-600" defaultChecked />
+                    <label key={feature} className={`flex items-center gap-3 px-4 py-3 bg-white rounded-xl border-2 cursor-pointer transition-colors ${
+                      selectedFeatures.includes(feature) ? 'border-blue-500 bg-blue-50' : 'border-gray-200 hover:border-blue-400'
+                    }`}>
+                      <input 
+                        type="checkbox" 
+                        checked={selectedFeatures.includes(feature)}
+                        onChange={(e) => {
+                          if (e.target.checked) {
+                            setSelectedFeatures([...selectedFeatures, feature]);
+                          } else {
+                            setSelectedFeatures(selectedFeatures.filter(f => f !== feature));
+                          }
+                        }}
+                        className="w-4 h-4 text-blue-600" 
+                      />
                       <span className="text-sm font-medium text-gray-700">{feature}</span>
                     </label>
                   ))}
@@ -543,7 +602,36 @@ function KitGuideContent() {
               </div>
             </div>
 
-            <button className="w-full mt-8 px-8 py-4 bg-gradient-to-r from-green-600 to-emerald-600 text-white rounded-xl font-semibold hover:shadow-xl hover:shadow-green-500/25 hover:-translate-y-0.5 transition-all">
+            <button 
+              onClick={() => {
+                const config = {
+                  database,
+                  apiStyle,
+                  deployment,
+                  features: selectedFeatures,
+                  timestamp: new Date().toISOString(),
+                };
+                
+                // Create and download config file
+                const blob = new Blob([JSON.stringify(config, null, 2)], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'kit-config.json';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+                
+                // Show success message with next steps
+                const message = language === 'vi' 
+                  ? `✅ Đã lưu cấu hình!\n\nDatabase: ${database}\nAPI: ${apiStyle}\nDeployment: ${deployment}\nFeatures: ${selectedFeatures.join(', ')}\n\n📥 File kit-config.json đã được tải về.\n\n🚀 Bước tiếp theo:\n1. Đặt file kit-config.json vào thư mục gốc project\n2. Chạy lệnh: npm run init:from-config\n\nHoặc chạy interactive init:\nnpm run init`
+                  : `✅ Configuration saved!\n\nDatabase: ${database}\nAPI: ${apiStyle}\nDeployment: ${deployment}\nFeatures: ${selectedFeatures.join(', ')}\n\n📥 kit-config.json file has been downloaded.\n\n🚀 Next steps:\n1. Place kit-config.json in project root\n2. Run: npm run init:from-config\n\nOr run interactive init:\nnpm run init`;
+                
+                alert(message);
+              }}
+              className="w-full mt-8 px-8 py-4 bg-gradient-to-r from-green-600 to-emerald-600 text-white rounded-xl font-semibold hover:shadow-xl hover:shadow-green-500/25 hover:-translate-y-0.5 transition-all active:scale-95"
+            >
               {t('customize.save')}
             </button>
           </div>

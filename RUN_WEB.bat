@@ -63,16 +63,15 @@ echo.
 echo TIPS:
 echo    - Keep this window open to keep web running
 echo    - Press Ctrl+C to stop web server
-echo    - Browser will auto-open in a moment...
+echo    - Browser will auto-open when server is ready...
 echo.
 echo ============================================================
 echo.
 
-REM Wait 2 seconds then open browser
-timeout /t 2 /nobreak >nul 2>&1
-start "" "http://localhost:3000/kit-guide"
+REM Start PowerShell script to wait for server and open browser
+start /B powershell -Command "$maxAttempts = 60; $attempt = 0; Write-Host 'Waiting for server to start...' -ForegroundColor Yellow; while ($attempt -lt $maxAttempts) { try { $response = Invoke-WebRequest -Uri 'http://localhost:3000' -TimeoutSec 2 -UseBasicParsing -ErrorAction Stop; if ($response.StatusCode -eq 200) { Write-Host 'Server is ready! Opening browser...' -ForegroundColor Green; Start-Sleep -Seconds 2; Start-Process 'http://localhost:3000/kit-guide'; break; } } catch { $attempt++; if ($attempt -lt $maxAttempts) { Start-Sleep -Seconds 1; } else { Write-Host 'Server did not start in time. Please check manually.' -ForegroundColor Red; } } }"
 
-REM Run web server
+REM Run web server (this will block until Ctrl+C)
 call npm run dev:web
 
 REM If web server stops (Ctrl+C), show message

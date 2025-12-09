@@ -3,7 +3,7 @@ const path = require('path');
 
 const nextConfig = {
   reactStrictMode: true,
-  swcMinify: true,
+  swcMinify: true, // Re-enabled after reinstalling Next.js
   // Enable standalone output for Docker deployment
   output: 'standalone',
   // Fix Windows path resolution issues
