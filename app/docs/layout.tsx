@@ -34,8 +34,8 @@ export default function DocsLayout({ children }: { children: React.ReactNode }) 
         </div>
       </header>
 
-      <div className="mx-auto flex max-w-7xl gap-6 px-4 pb-12 pt-10 lg:px-8">
-        <aside className="hidden w-72 shrink-0 lg:block">
+      <div className="mx-auto grid max-w-7xl gap-6 px-4 pb-12 pt-10 lg:grid-cols-[240px_minmax(0,1fr)] lg:px-8 xl:grid-cols-[260px_minmax(0,1fr)_260px]">
+        <aside className="hidden lg:block">
           <div className="rounded-2xl border border-slate-200 bg-white/85 p-5 shadow-lg shadow-slate-200/40">
             <nav className="space-y-6">
               {docSections.map(section => (
@@ -64,13 +64,11 @@ export default function DocsLayout({ children }: { children: React.ReactNode }) 
           </div>
         </aside>
 
-        <main className="flex-1 lg:max-w-4xl">
+        <main className="lg:col-span-1">
           <div className="rounded-2xl border border-slate-200 bg-white/90 p-8 shadow-xl shadow-slate-200/50">
             {children}
           </div>
         </main>
-
-        <div className="hidden w-64 shrink-0 lg:block" />
       </div>
     </div>
   );

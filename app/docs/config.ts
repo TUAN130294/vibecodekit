@@ -11,14 +11,14 @@ export type DocSection = {
 
 export const docSections: DocSection[] = [
   {
-    title: 'Getting Started',
+    title: 'Bắt đầu',
     items: [
-      { title: 'Introduction', slug: 'quick-start' },
-      { title: 'Setup New Project', slug: 'setup-new-project' }
+      { title: 'Giới thiệu', slug: 'quick-start' },
+      { title: 'Thiết lập dự án', slug: 'setup-new-project' }
     ]
   },
   {
-    title: 'The Vibe Architecture',
+    title: 'Kiến trúc Vibe',
     items: [
       { title: 'Memory Bank Workflow', slug: 'memory-bank-workflow' },
       { title: 'Next.js + Python Worker Bridge', slug: 'python-worker-automation' }
@@ -33,14 +33,14 @@ export const docSections: DocSection[] = [
     ]
   },
   {
-    title: 'Reference',
+    title: 'Tham khảo',
     items: [
       { title: 'Agents Configuration', slug: 'AGENTS' },
       { title: 'CLI & Scripts', slug: 'cli-tools' }
     ]
   },
   {
-    title: 'Why VibeCodeKit',
+    title: 'Vì sao VibeCodeKit',
     items: [{ title: 'Why VibeCodeKit?', slug: 'why-vibecodekit' }]
   }
 ];
