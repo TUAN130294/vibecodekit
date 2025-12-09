@@ -9,14 +9,14 @@ export function Toc({ headings }: { headings: TocItem[] }) {
   if (!filtered.length) return null;
 
   return (
-    <div className="sticky top-10 rounded-lg border border-white/5 bg-slate-900/50 p-4">
-      <div className="text-xs font-semibold uppercase tracking-wide text-slate-400">
+    <div className="sticky top-10 rounded-xl border border-slate-200 bg-white/85 p-4 shadow-md shadow-slate-200/50">
+      <div className="text-xs font-semibold uppercase tracking-wide text-slate-500">
         On this page
       </div>
-      <ul className="mt-3 space-y-2 text-sm text-slate-200">
+      <ul className="mt-3 space-y-2 text-sm text-slate-700">
         {filtered.map(item => (
-          <li key={item.id} className={item.depth === 3 ? 'pl-3 text-slate-400' : ''}>
-            <a href={`#${item.id}`} className="hover:text-white">
+          <li key={item.id} className={item.depth === 3 ? 'pl-3 text-slate-500' : ''}>
+            <a href={`#${item.id}`} className="hover:text-blue-700">
               {item.text}
             </a>
           </li>
