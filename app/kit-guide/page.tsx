@@ -89,18 +89,16 @@ function KitGuideContent() {
   ];
 
   const docs = [
-    { title: 'Quick Start', file: 'docs/quick-start.md', icon: '🚀', time: '5 min' },
-    { title: 'React Rules', file: '.cursor/rules/frontend/react.md', icon: '⚛️', time: '10 min' },
-    { title: 'Next.js Rules', file: '.cursor/rules/frontend/nextjs.md', icon: '▲', time: '10 min' },
-    { title: 'Tailwind Rules', file: '.cursor/rules/frontend/tailwind.md', icon: '🎨', time: '10 min' },
-    { title: 'GraphQL Guide', file: '.cursor/rules/api/graphql.md', icon: '🔷', time: '15 min' },
-    { title: 'MongoDB Guide', file: '.cursor/rules/database/mongodb.md', icon: '🍃', time: '15 min' },
-    { title: 'Prisma Guide', file: '.cursor/rules/database/prisma.md', icon: '💎', time: '15 min' },
-    { title: 'AI Chatbot Rules', file: '.cursor/rules/ai-chatbot-rules.md', icon: '🤖', time: '20 min' },
-    { title: 'Code Protection', file: '.cursor/rules/code-preservation.md', icon: '🛡️', time: '15 min' },
-    { title: 'AWS Deployment', file: '.cursor/rules/deployment/aws.md', icon: '☁️', time: '20 min' },
-    { title: 'Self-Hosted Guide', file: 'docs/quick-start.md#self-hosted', icon: '🏠', time: '10 min' },
-    { title: 'Protection Guide', file: 'docs/code-protection-guide.md', icon: '🔒', time: '15 min' },
+    { title: 'Docs Hub', href: '/docs/quick-start', icon: '📚', time: 'Hub' },
+    { title: 'Quick Start', href: '/docs/quick-start', icon: '🚀', time: '5 min' },
+    { title: 'Setup New Project', href: '/docs/setup-new-project', icon: '🛠️', time: '8 min' },
+    { title: 'Memory Bank Workflow', href: '/docs/memory-bank-workflow', icon: '🧠', time: '7 min' },
+    { title: 'Python Worker Automation', href: '/docs/python-worker-automation', icon: '🤖', time: '7 min' },
+    { title: 'Doctor & Rules', href: '/docs/doctor-and-rules', icon: '🩺', time: '5 min' },
+    { title: 'CLI & Scripts', href: '/docs/cli-tools', icon: '⌨️', time: '5 min' },
+    { title: 'Code Protection', href: '/docs/code-protection-guide', icon: '🛡️', time: '10 min' },
+    { title: 'Agents Config', href: '/docs/AGENTS', icon: '🧩', time: '10 min' },
+    { title: 'Why VibeCodeKit', href: '/docs/why-vibecodekit', icon: '✨', time: '4 min' },
   ];
 
   const commands = [
@@ -251,26 +249,35 @@ function KitGuideContent() {
           </div>
 
           <div className="max-w-6xl mx-auto">
+            <div className="flex justify-end mb-4">
+              <a
+                href="/docs/quick-start"
+                target="_blank"
+                className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 px-4 py-2 text-sm font-semibold text-white shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all"
+              >
+                {language === 'vi' ? 'Mở Docs Hub' : 'Open Docs Hub'}
+                <span aria-hidden>↗</span>
+              </a>
+            </div>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {docs.map((doc) => (
-                <div
-                  key={doc.file}
-                  onClick={() => {
-                    navigator.clipboard.writeText(doc.file);
-                    alert(language === 'vi' ? `Đã copy: ${doc.file}` : `Copied: ${doc.file}`);
-                  }}
-                  className="bg-white/80 backdrop-blur-sm p-6 rounded-2xl border border-gray-200/50 shadow-lg hover:-translate-y-1 group hover:shadow-xl transition-all cursor-pointer"
+              {docs.map(doc => (
+                <a
+                  key={doc.title}
+                  href={doc.href}
+                  target="_blank"
+                  className="bg-white/80 backdrop-blur-sm p-6 rounded-2xl border border-gray-200/50 shadow-lg hover:-translate-y-1 group hover:shadow-xl transition-all"
                 >
                   <div className="flex items-start justify-between mb-3">
                     <span className="text-3xl group-hover:scale-110 transition-transform">{doc.icon}</span>
-                    <span className="px-2.5 py-1 bg-blue-50 text-blue-700 text-xs rounded-full font-semibold">{doc.time}</span>
+                    <span className="px-2.5 py-1 bg-blue-50 text-blue-700 text-xs rounded-full font-semibold">
+                      {doc.time}
+                    </span>
                   </div>
                   <h3 className="text-lg font-bold text-gray-900 mb-2">{doc.title}</h3>
-                  <p className="text-sm text-gray-500 font-mono truncate">{doc.file}</p>
-                  <p className="text-xs text-blue-600 mt-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                    {language === 'vi' ? '👆 Click để copy đường dẫn' : '👆 Click to copy path'}
+                  <p className="text-sm text-blue-600 font-semibold group-hover:underline">
+                    {language === 'vi' ? 'Xem tài liệu' : 'View doc'}
                   </p>
-                </div>
+                </a>
               ))}
             </div>
           </div>
