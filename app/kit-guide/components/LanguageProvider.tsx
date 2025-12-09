@@ -414,6 +414,83 @@ export const translations: Translations = {
         vi: 'Kiểm tra code',
         en: 'Review code',
     },
+    // VibeCoder Guide
+    'guide.title': {
+        vi: 'Dành cho Vibecoder (Non-Tech)',
+        en: 'For Vibecoders (Non-Tech)',
+    },
+    'guide.subtitle': {
+        vi: 'Cách Universal Kit hoạt động (Giải thích đơn giản)',
+        en: 'How Universal Kit Works (Simple Explanation)',
+    },
+    'guide.analogy.title': {
+        vi: '"Căn Bếp 5 Sao" cho AI',
+        en: '"5-Star Kitchen" for AI',
+    },
+    'guide.analogy.normal': {
+        vi: 'Bình thường: Bạn thuê Siêu Đầu Bếp (AI) vào một căn bếp trống. Bạn phải tự chỉ đạo mọi thứ.',
+        en: 'Normal: You hire a Master Chef (AI) into an empty kitchen. You have to direct everything.',
+    },
+    'guide.analogy.kit': {
+        vi: 'Có Kit: Bạn đưa AI vào Căn Bếp 5 Sao với đầy đủ dụng cụ, công thức và quy trình chuẩn.',
+        en: 'With Kit: You put AI in a 5-Star Kitchen with all tools, recipes, and standard procedures.',
+    },
+    'guide.steps.title': {
+        vi: 'Quy trình 3 Bước Đơn giản',
+        en: 'Simple 3-Step Process',
+    },
+    'guide.step1.title': {
+        vi: '1. "Gọi Món" trên Web',
+        en: '1. "Order" on Web',
+    },
+    'guide.step1.desc': {
+        vi: 'Vào đây tạo Prompt/Plan rồi Copy',
+        en: 'Generate Prompt/Plan here & Copy',
+    },
+    'guide.step2.title': {
+        vi: '2. "Gửi Lệnh" cho AI',
+        en: '2. "Send Order" to AI',
+    },
+    'guide.step2.desc': {
+        vi: 'Paste vào Cursor/Windsurf',
+        en: 'Paste into Cursor/Windsurf',
+    },
+    'guide.step3.title': {
+        vi: '3. AI "Auto-pilot"',
+        en: '3. AI on "Auto-pilot"',
+    },
+    'guide.step3.desc': {
+        vi: 'AI tự code, tự nhớ, tự kiểm tra',
+        en: 'AI codes, remembers, and checks itself',
+    },
+    'guide.benefits.title': {
+        vi: 'Tại sao cần Kit?',
+        en: 'Why do you need Kit?',
+    },
+    'guide.benefit1.title': {
+        vi: 'AI không "Mất Trí Nhớ"',
+        en: 'AI never "Forgets"',
+    },
+    'guide.benefit1.desc': {
+        vi: 'Memory Bank giúp AI nhớ mọi thứ',
+        en: 'Memory Bank helps AI remember everything',
+    },
+    'guide.benefit2.title': {
+        vi: 'Bảo vệ Code',
+        en: 'Code Protection',
+    },
+    'guide.benefit2.desc': {
+        vi: 'Ngăn AI làm hỏng code cũ',
+        en: 'Prevents AI from breaking old code',
+    },
+    'guide.benefit3.title': {
+        vi: 'Không bắt đầu từ số 0',
+        en: 'Not starting from zero',
+    },
+    'guide.benefit3.desc': {
+        vi: 'Dùng Templates có sẵn cực nhanh',
+        en: 'Use ready-made Templates instantly',
+    },
 };
 
 interface LanguageContextType {
@@ -473,8 +550,8 @@ export function LanguageToggle() {
             <button
                 onClick={() => setLanguage('vi')}
                 className={`px-3 py-1.5 rounded-full text-sm font-medium transition-all ${language === 'vi'
-                        ? 'bg-white text-gray-900 shadow-md'
-                        : 'text-gray-600 hover:text-gray-900'
+                    ? 'bg-white text-gray-900 shadow-md'
+                    : 'text-gray-600 hover:text-gray-900'
                     }`}
             >
                 🇻🇳 VI
@@ -482,8 +559,8 @@ export function LanguageToggle() {
             <button
                 onClick={() => setLanguage('en')}
                 className={`px-3 py-1.5 rounded-full text-sm font-medium transition-all ${language === 'en'
-                        ? 'bg-white text-gray-900 shadow-md'
-                        : 'text-gray-600 hover:text-gray-900'
+                    ? 'bg-white text-gray-900 shadow-md'
+                    : 'text-gray-600 hover:text-gray-900'
                     }`}
             >
                 🇺🇸 EN

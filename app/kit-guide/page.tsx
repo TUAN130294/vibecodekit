@@ -8,7 +8,7 @@ import PromptGenerator from './components/PromptGenerator';
 // Main content component that uses translations
 function KitGuideContent() {
   const { t, language } = useLanguage();
-  
+
   // State for customization options
   const [database, setDatabase] = useState('PostgreSQL + TypeORM');
   const [apiStyle, setApiStyle] = useState('REST API');
@@ -186,13 +186,13 @@ function KitGuideContent() {
             <div className="flex items-center gap-4">
               <LanguageToggle />
               <a
-              href="/docs/quick-start"
-              target="_blank"
-              className="hidden md:flex px-5 py-2.5 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl hover:shadow-lg transition-all font-semibold shadow-md hover:-translate-y-0.5"
-            >
-              {t('nav.docsHub')}
-            </a>
-            <a
+                href="/docs/quick-start"
+                target="_blank"
+                className="hidden md:flex px-5 py-2.5 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl hover:shadow-lg transition-all font-semibold shadow-md hover:-translate-y-0.5"
+              >
+                {t('nav.docsHub')}
+              </a>
+              <a
                 href="https://github.com/TUAN130294/vibecodekit"
                 target="_blank"
                 className="hidden md:flex px-5 py-2.5 bg-gray-900 text-white rounded-xl hover:bg-gray-800 transition-all font-semibold shadow-md hover:shadow-lg"
@@ -260,6 +260,107 @@ function KitGuideContent() {
                 <div className="text-sm text-gray-600 font-medium">{stat.label}</div>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* VibeCoder Guide Section */}
+      <section className="py-20 bg-gradient-to-br from-indigo-50 via-white to-purple-50">
+        <div className="container mx-auto px-4">
+          <div className="max-w-5xl mx-auto">
+            {/* Header */}
+            <div className="text-center mb-16">
+              <div className="inline-block px-4 py-1.5 bg-blue-100 text-blue-700 rounded-full text-sm font-semibold mb-4">
+                {t('guide.title')}
+              </div>
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
+                {t('guide.analogy.title')}
+              </h2>
+              <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+                {t('guide.subtitle')}
+              </p>
+            </div>
+
+            {/* Analogy Comparison */}
+            <div className="grid md:grid-cols-2 gap-8 mb-20">
+              <div className="bg-white p-8 rounded-2xl border-2 border-dashed border-gray-300 relative overflow-hidden group hover:border-gray-400 transition-colors">
+                <div className="absolute top-0 right-0 p-4 opacity-10 text-9xl leading-none grayscale group-hover:grayscale-0 transition-all">👨‍🍳</div>
+                <h3 className="text-xl font-bold text-gray-500 mb-4">{t('guide.analogy.normal').split(':')[0]}</h3>
+                <p className="text-gray-600 text-lg leading-relaxed">
+                  {t('guide.analogy.normal').split(':')[1]}
+                </p>
+              </div>
+              <div className="bg-white p-8 rounded-2xl border-2 border-blue-500 shadow-xl shadow-blue-500/10 relative overflow-hidden group">
+                <div className="absolute top-0 right-0 p-4 opacity-10 text-9xl leading-none">⭐⭐⭐⭐⭐</div>
+                <h3 className="text-xl font-bold text-blue-600 mb-4">{t('guide.analogy.kit').split(':')[0]}</h3>
+                <p className="text-gray-800 text-lg leading-relaxed font-medium">
+                  {t('guide.analogy.kit').split(':')[1]}
+                </p>
+                <div className="mt-6 flex gap-2 flex-wrap">
+                  <span className="px-3 py-1 bg-blue-50 text-blue-700 rounded-full text-sm font-medium">✨ Rules</span>
+                  <span className="px-3 py-1 bg-purple-50 text-purple-700 rounded-full text-sm font-medium">🧠 Memory</span>
+                  <span className="px-3 py-1 bg-green-50 text-green-700 rounded-full text-sm font-medium">🛡️ Protection</span>
+                </div>
+              </div>
+            </div>
+
+            {/* 3 Step Process */}
+            <div className="mb-20">
+              <h3 className="text-2xl font-bold text-center mb-12">{t('guide.steps.title')}</h3>
+              <div className="grid md:grid-cols-3 gap-8 relative">
+                {/* Connecting Line (Desktop) */}
+                <div className="hidden md:block absolute top-12 left-0 w-full h-0.5 bg-gradient-to-r from-blue-200 via-purple-200 to-green-200 -z-10"></div>
+
+                {/* Step 1 */}
+                <div className="relative text-center">
+                  <div className="w-24 h-24 mx-auto bg-white rounded-full border-4 border-blue-100 flex items-center justify-center text-4xl shadow-lg mb-6 z-10 relative">
+                    🍲
+                    <div className="absolute -top-2 -right-2 w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold text-sm">1</div>
+                  </div>
+                  <h4 className="text-lg font-bold text-gray-900 mb-2">{t('guide.step1.title')}</h4>
+                  <p className="text-gray-600">{t('guide.step1.desc')}</p>
+                </div>
+
+                {/* Step 2 */}
+                <div className="relative text-center">
+                  <div className="w-24 h-24 mx-auto bg-white rounded-full border-4 border-purple-100 flex items-center justify-center text-4xl shadow-lg mb-6 z-10 relative">
+                    📋
+                    <div className="absolute -top-2 -right-2 w-8 h-8 bg-purple-600 text-white rounded-full flex items-center justify-center font-bold text-sm">2</div>
+                  </div>
+                  <h4 className="text-lg font-bold text-gray-900 mb-2">{t('guide.step2.title')}</h4>
+                  <p className="text-gray-600">{t('guide.step2.desc')}</p>
+                </div>
+
+                {/* Step 3 */}
+                <div className="relative text-center">
+                  <div className="w-24 h-24 mx-auto bg-white rounded-full border-4 border-green-100 flex items-center justify-center text-4xl shadow-lg mb-6 z-10 relative">
+                    ✈️
+                    <div className="absolute -top-2 -right-2 w-8 h-8 bg-green-600 text-white rounded-full flex items-center justify-center font-bold text-sm">3</div>
+                  </div>
+                  <h4 className="text-lg font-bold text-gray-900 mb-2">{t('guide.step3.title')}</h4>
+                  <p className="text-gray-600">{t('guide.step3.desc')}</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Benefits Grid */}
+            <div className="grid md:grid-cols-3 gap-6">
+              <div className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
+                <div className="text-3xl mb-4">🧠</div>
+                <h4 className="font-bold text-gray-900 mb-2">{t('guide.benefit1.title')}</h4>
+                <p className="text-sm text-gray-600">{t('guide.benefit1.desc')}</p>
+              </div>
+              <div className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
+                <div className="text-3xl mb-4">🛡️</div>
+                <h4 className="font-bold text-gray-900 mb-2">{t('guide.benefit2.title')}</h4>
+                <p className="text-sm text-gray-600">{t('guide.benefit2.desc')}</p>
+              </div>
+              <div className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
+                <div className="text-3xl mb-4">🧩</div>
+                <h4 className="font-bold text-gray-900 mb-2">{t('guide.benefit3.title')}</h4>
+                <p className="text-sm text-gray-600">{t('guide.benefit3.desc')}</p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -571,16 +672,15 @@ function KitGuideContent() {
                 </div>
                 <div className="space-y-3">
                   {['PostgreSQL + TypeORM', 'PostgreSQL + Prisma', 'MongoDB + Mongoose'].map((db) => (
-                    <label key={db} className={`flex items-center gap-3 px-4 py-3 bg-white rounded-xl border-2 cursor-pointer transition-colors ${
-                      database === db ? 'border-blue-500 bg-blue-50' : 'border-gray-200 hover:border-blue-400'
-                    }`}>
-                      <input 
-                        type="radio" 
-                        name="database" 
+                    <label key={db} className={`flex items-center gap-3 px-4 py-3 bg-white rounded-xl border-2 cursor-pointer transition-colors ${database === db ? 'border-blue-500 bg-blue-50' : 'border-gray-200 hover:border-blue-400'
+                      }`}>
+                      <input
+                        type="radio"
+                        name="database"
                         value={db}
                         checked={database === db}
                         onChange={(e) => setDatabase(e.target.value)}
-                        className="w-4 h-4 text-blue-600" 
+                        className="w-4 h-4 text-blue-600"
                       />
                       <span className="text-sm font-medium text-gray-700">{db}</span>
                     </label>
@@ -596,16 +696,15 @@ function KitGuideContent() {
                 </div>
                 <div className="space-y-3">
                   {['REST API', 'GraphQL', 'Both REST + GraphQL'].map((api) => (
-                    <label key={api} className={`flex items-center gap-3 px-4 py-3 bg-white rounded-xl border-2 cursor-pointer transition-colors ${
-                      apiStyle === api ? 'border-blue-500 bg-blue-50' : 'border-gray-200 hover:border-blue-400'
-                    }`}>
-                      <input 
-                        type="radio" 
-                        name="api" 
+                    <label key={api} className={`flex items-center gap-3 px-4 py-3 bg-white rounded-xl border-2 cursor-pointer transition-colors ${apiStyle === api ? 'border-blue-500 bg-blue-50' : 'border-gray-200 hover:border-blue-400'
+                      }`}>
+                      <input
+                        type="radio"
+                        name="api"
                         value={api}
                         checked={apiStyle === api}
                         onChange={(e) => setApiStyle(e.target.value)}
-                        className="w-4 h-4 text-blue-600" 
+                        className="w-4 h-4 text-blue-600"
                       />
                       <span className="text-sm font-medium text-gray-700">{api}</span>
                     </label>
@@ -621,16 +720,15 @@ function KitGuideContent() {
                 </div>
                 <div className="space-y-3">
                   {['Self-Hosted (Docker)', 'AWS Elastic Beanstalk', 'AWS ECS + Fargate', 'AWS Lambda'].map((deploy) => (
-                    <label key={deploy} className={`flex items-center gap-3 px-4 py-3 bg-white rounded-xl border-2 cursor-pointer transition-colors ${
-                      deployment === deploy ? 'border-blue-500 bg-blue-50' : 'border-gray-200 hover:border-blue-400'
-                    }`}>
-                      <input 
-                        type="radio" 
-                        name="deploy" 
+                    <label key={deploy} className={`flex items-center gap-3 px-4 py-3 bg-white rounded-xl border-2 cursor-pointer transition-colors ${deployment === deploy ? 'border-blue-500 bg-blue-50' : 'border-gray-200 hover:border-blue-400'
+                      }`}>
+                      <input
+                        type="radio"
+                        name="deploy"
                         value={deploy}
                         checked={deployment === deploy}
                         onChange={(e) => setDeployment(e.target.value)}
-                        className="w-4 h-4 text-blue-600" 
+                        className="w-4 h-4 text-blue-600"
                       />
                       <span className="text-sm font-medium text-gray-700">{deploy}</span>
                     </label>
@@ -646,11 +744,10 @@ function KitGuideContent() {
                 </div>
                 <div className="space-y-3">
                   {['AI Chatbot', 'Automation (n8n)', 'BI Dashboard', 'Code Protection'].map((feature) => (
-                    <label key={feature} className={`flex items-center gap-3 px-4 py-3 bg-white rounded-xl border-2 cursor-pointer transition-colors ${
-                      selectedFeatures.includes(feature) ? 'border-blue-500 bg-blue-50' : 'border-gray-200 hover:border-blue-400'
-                    }`}>
-                      <input 
-                        type="checkbox" 
+                    <label key={feature} className={`flex items-center gap-3 px-4 py-3 bg-white rounded-xl border-2 cursor-pointer transition-colors ${selectedFeatures.includes(feature) ? 'border-blue-500 bg-blue-50' : 'border-gray-200 hover:border-blue-400'
+                      }`}>
+                      <input
+                        type="checkbox"
                         checked={selectedFeatures.includes(feature)}
                         onChange={(e) => {
                           if (e.target.checked) {
@@ -659,7 +756,7 @@ function KitGuideContent() {
                             setSelectedFeatures(selectedFeatures.filter(f => f !== feature));
                           }
                         }}
-                        className="w-4 h-4 text-blue-600" 
+                        className="w-4 h-4 text-blue-600"
                       />
                       <span className="text-sm font-medium text-gray-700">{feature}</span>
                     </label>
@@ -668,7 +765,7 @@ function KitGuideContent() {
               </div>
             </div>
 
-            <button 
+            <button
               onClick={() => {
                 const config = {
                   database,
@@ -677,7 +774,7 @@ function KitGuideContent() {
                   features: selectedFeatures,
                   timestamp: new Date().toISOString(),
                 };
-                
+
                 // Create and download config file
                 const blob = new Blob([JSON.stringify(config, null, 2)], { type: 'application/json' });
                 const url = URL.createObjectURL(blob);
@@ -688,12 +785,12 @@ function KitGuideContent() {
                 a.click();
                 document.body.removeChild(a);
                 URL.revokeObjectURL(url);
-                
+
                 // Show success message with next steps
-                const message = language === 'vi' 
+                const message = language === 'vi'
                   ? `✅ Đã lưu cấu hình!\n\nDatabase: ${database}\nAPI: ${apiStyle}\nDeployment: ${deployment}\nFeatures: ${selectedFeatures.join(', ')}\n\n📥 File kit-config.json đã được tải về.\n\n🚀 Bước tiếp theo:\n1. Đặt file kit-config.json vào thư mục gốc project\n2. Chạy lệnh: npm run init:from-config\n\nHoặc chạy interactive init:\nnpm run init`
                   : `✅ Configuration saved!\n\nDatabase: ${database}\nAPI: ${apiStyle}\nDeployment: ${deployment}\nFeatures: ${selectedFeatures.join(', ')}\n\n📥 kit-config.json file has been downloaded.\n\n🚀 Next steps:\n1. Place kit-config.json in project root\n2. Run: npm run init:from-config\n\nOr run interactive init:\nnpm run init`;
-                
+
                 alert(message);
               }}
               className="w-full mt-8 px-8 py-4 bg-gradient-to-r from-green-600 to-emerald-600 text-white rounded-xl font-semibold hover:shadow-xl hover:shadow-green-500/25 hover:-translate-y-0.5 transition-all active:scale-95"
