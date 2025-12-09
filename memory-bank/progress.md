@@ -14,6 +14,7 @@
 - DONE: Security guardrails doc + env leak checks in doctor
 - DONE: REST bridge scaffolding Next.js ↔ Python worker
 - DONE: Docs hub blueprint + implementation (sidebar, TOC, FS markdown)
+- DONE: Sync kit-guide docs section with Docs Hub CTA + i18n labels
 - TODO: Testing
 - TODO: Deployment
 - BLOCKED: None noted (generic template)
