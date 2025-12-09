@@ -85,6 +85,9 @@ API:
 - REST, OpenAPI at /api/docs; envelope { success, data, error? }
 - Errors: code + message; do not leak stack in prod
 
+# Active Context Rule
+- Before finishing ANY task, read and update `memory-bank/progress.md` with the latest status and tick relevant checkboxes. No task is considered done until progress is recorded.
+
 Security:
 - Secrets only in .env.* (template .env.example committed)
 - Validate input; parameterized queries; HTTPS; rate limit; CORS allow-list

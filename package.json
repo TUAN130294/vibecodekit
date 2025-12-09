@@ -24,6 +24,8 @@
     "format": "prettier --write \"{src,tests}/**/*.{ts,tsx,js,json,md}\"",
     "worker": "ts-node src/worker.ts || echo \"worker stub\"",
     "doctor": "node scripts/doctor.js",
+    "verify:memory": "node scripts/verify-memory.js",
+    "prepare": "git config core.hooksPath .githooks",
     "clean": "rm -rf .next node_modules dist .kit-config.json"
   },
   "dependencies": {

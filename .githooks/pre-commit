@@ -1,0 +1,6 @@
+#!/bin/sh
+# Warn if memory-bank/progress.md is not updated alongside code changes.
+# Non-blocking by design; keeps Active Context System in sync.
+
+node scripts/verify-memory.js || true
+

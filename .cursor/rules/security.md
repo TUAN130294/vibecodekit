@@ -33,3 +33,10 @@
 - Alert on auth failures, rate-limit spikes, and unusual access patterns.
 - Maintain audit logs for admin actions and data exports.
 
+## Guardrails Checklist (build + review)
+- Do not hardcode API keys; keep real secrets only in `.env.*` (gitignored).
+- Validate input on both client + server; reject overlong payloads and unsafe HTML.
+- Check authorization on every data fetch/update to prevent IDOR.
+- For new APIs, keep response envelope `{ success, data, error? }` and avoid stack traces in prod.
+- Before committing, run `npm run doctor` to spot missing envs and potential secret leaks.
+

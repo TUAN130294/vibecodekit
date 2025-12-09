@@ -10,8 +10,11 @@
 - DONE: TypeORM setup with User entity + migration
 - IN_PROGRESS: API endpoints (generic)
 - IN_PROGRESS: n8n workflows (generic)
+- DONE: Active Context guardrail (rule + pre-commit warning)
+- DONE: Security guardrails doc + env leak checks in doctor
+- DONE: REST bridge scaffolding Next.js ↔ Python worker
 - TODO: Testing
 - TODO: Deployment
 - BLOCKED: None noted (generic template)
-- Last Updated: 2025-12-08
+- Last Updated: 2025-12-09
 
