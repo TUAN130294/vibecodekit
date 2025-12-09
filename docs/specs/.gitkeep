@@ -1,0 +1,5 @@
+# Feature Specifications
+
+This folder contains implementation plans for new features.
+Each plan file follows the template in `docs/templates/feature_spec.md`.
+

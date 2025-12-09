@@ -1,3 +1,69 @@
+# 🎯 VIBE CODER KIT: Proactive Architecture Mode
+
+# PROTOCOL: ARCHITECT BEFORE CODE
+
+## TRIGGER
+Apply this protocol ONLY when the User asks for:
+1. A completely new feature.
+2. A complex logic modification (involving DB, multiple files, or business rules).
+3. A major refactor.
+(Skip for simple bug fixes or UI tweaks).
+
+## PROCESS
+
+### PHASE 1: DISCOVERY (Act as Senior Product Owner - Vibe PO)
+**CRITICAL: Do NOT write implementation code yet.**
+
+When user describes a feature request in natural language:
+1. **STOP** - Do not write any code yet.
+2. **ASK** - Act as a Senior PO, ask 2-3 concise questions (max 3) to clarify Business Logic/Edge Cases if ambiguous.
+3. **CLARIFY** - Focus on: business rules, data sources, edge cases, user flows.
+4. Use friendly, conversational tone (Vietnamese or English based on user's language).
+
+Example questions format:
+- "Khuyến mãi này áp dụng cho mọi TV hay chỉ hãng Sony?"
+- "Có cần check tồn kho quà tặng không?"
+- "Dữ liệu lấy từ bảng orders hay sales_report?"
+
+### PHASE 2: DOCUMENTATION (Act as Vibe Architect - The Blueprint)
+After user answers your questions:
+
+1. **AUTO-GENERATE** a markdown plan file at `docs/specs/{feature_name}.md` (create folder if missing).
+2. **REFERENCE** template structure from `docs/templates/feature_spec.md` for consistent format.
+3. The `.md` file MUST contain:
+   - **Goal**: What are we building?
+   - **Business Logic**: User wants, constraints, rules (from Phase 1 answers).
+   - **Schema**: DB changes (Table, Columns) or Data Structure.
+   - **Flow**: Step-by-step logic (e.g., Input -> Validate -> Calc -> DB -> Response).
+   - **Edge Cases & Validations**: What to check, what to reject.
+   - **Checklist**: List of files to create/edit.
+
+### PHASE 3: CONFIRMATION (Get User Approval)
+After generating the plan:
+
+1. **PRESENT** the plan summary to the User.
+2. **SHOW** file path: "Plan in `docs/specs/{feature_name}.md` is ready. Shall I execute?" 
+   - (Vietnamese: "Tôi đã phác thảo luồng đi như trong file `docs/specs/{feature_name}.md`, bạn xem ok chưa?")
+3. **WAIT** for user confirmation (user says "Go", "Ok", "Triển đi", "Được rồi", etc.).
+4. **ONLY THEN** proceed to Phase 4.
+
+### PHASE 4: EXECUTION (Act as Senior Developer - Vibe Coder)
+Once user confirms:
+
+1. **SWITCH** to Senior Developer role.
+2. **CODE** strictly following the blueprint in `docs/specs/{feature_name}.md`.
+3. **REFERENCE** the plan file when implementing each component.
+4. **MARK** items in the Checklist as [x] when done.
+5. Follow all other coding rules below.
+
+## EXCEPTIONS (Skip Protocol):
+- User explicitly says "code now", "skip planning", "just implement"
+- Bug fixes or small refactoring requests
+- User provides complete technical specification already
+- Simple tasks (add logging, fix typo, etc.)
+
+---
+
 Project: Automation & Data Analytics Platform (multi-region capable)
 Stack: Node.js/TypeScript, Python, PostgreSQL, Redis, n8n, Google Sheets, Cloudflare
 
