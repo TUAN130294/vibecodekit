@@ -21,20 +21,20 @@ function run() {
     return;
   }
 
-  const memoryTouched = staged.some(path => path.startsWith('memory-bank/'));
+  const memoryTouched = staged.some(path => path.startsWith('vibekit/memory-bank/'));
   const codeTouched = staged.filter(
     path =>
-      !path.startsWith('memory-bank/') &&
-      !path.startsWith('.githooks/') &&
-      !path.startsWith('.husky/') &&
-      !path.startsWith('docs/') &&
+      !path.startsWith('vibekit/memory-bank/') &&
+      !path.startsWith('vibekit/.githooks/') &&
+      !path.startsWith('vibekit/scripts/') &&
+      !path.startsWith('vibekit/docs/') &&
       !path.startsWith('README')
   );
 
   if (codeTouched.length && !memoryTouched) {
     console.warn('\n[memory-bank] Detected staged code changes without progress update.');
     console.warn(
-      '- Please open and update memory-bank/progress.md (status, checkboxes, last updated).'
+      '- Please open and update vibekit/memory-bank/progress.md (status, checkboxes, last updated).'
     );
     console.warn('- Re-stage after updating to keep Active Context in sync.\n');
   }

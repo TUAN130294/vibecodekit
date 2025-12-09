@@ -10,7 +10,7 @@ export interface DocContent {
   headings: Array<{ id: string; depth: number; text: string }>;
 }
 
-const docsRoot = path.join(process.cwd(), 'docs');
+const docsRoot = path.join(process.cwd(), 'vibekit', 'docs');
 
 function normalizeSlug(slug: string | string[] | undefined): string {
   if (!slug || (Array.isArray(slug) && slug.length === 0)) return 'quick-start';

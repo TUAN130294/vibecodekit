@@ -4,9 +4,9 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "init": "node scripts/init.js",
-    "init:from-config": "node scripts/init-from-config.js",
-    "setup": "node scripts/setup-new-project.js",
+    "init": "node vibekit/scripts/init.js",
+    "init:from-config": "node vibekit/scripts/init-from-config.js",
+    "setup": "node vibekit/scripts/setup-new-project.js",
     "dev": "tsx watch src/server.ts",
     "dev:web": "npx next dev",
     "dev:lite": "npx next dev",
@@ -23,9 +23,9 @@
     "lint": "eslint \"src/**/*.{ts,tsx}\"",
     "format": "prettier --write \"{src,tests}/**/*.{ts,tsx,js,json,md}\"",
     "worker": "ts-node src/worker.ts || echo \"worker stub\"",
-    "doctor": "node scripts/doctor.js",
-    "verify:memory": "node scripts/verify-memory.js",
-    "prepare": "git config core.hooksPath .githooks",
+    "doctor": "node vibekit/scripts/doctor.js",
+    "verify:memory": "node vibekit/scripts/verify-memory.js",
+    "prepare": "git config core.hooksPath vibekit/.githooks",
     "clean": "rm -rf .next node_modules dist .kit-config.json"
   },
   "dependencies": {
