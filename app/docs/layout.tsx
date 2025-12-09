@@ -43,6 +43,28 @@ export default function DocsLayout({ children }: { children: React.ReactNode }) 
 
       <div className="mx-auto grid max-w-7xl gap-8 lg:gap-10 px-4 pb-12 pt-10 lg:grid-cols-[240px_minmax(0,1fr)] lg:px-8 relative">
         <aside className="hidden lg:block">
+          {/* Setup Guide CTA */}
+          <Link
+            href="/kit-guide#setup-guide"
+            className="block mb-6 rounded-2xl border-2 border-gradient-to-r from-blue-500 to-purple-500 bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 p-6 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 group"
+          >
+            <div className="flex items-center gap-3 mb-3">
+              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-blue-500 to-purple-500 text-2xl shadow-lg">
+                📂
+              </div>
+              <h3 className="text-lg font-bold text-gray-900 group-hover:text-blue-600 transition-colors">
+                Setup Guide
+              </h3>
+            </div>
+            <p className="text-sm text-gray-700 mb-3 leading-relaxed">
+              Learn how to setup & use VibeCodeKit in your project
+            </p>
+            <div className="flex items-center gap-2 text-blue-600 font-semibold text-sm group-hover:gap-3 transition-all">
+              <span>View Guide</span>
+              <span className="text-lg">→</span>
+            </div>
+          </Link>
+
           <div className="rounded-2xl border border-slate-200/80 bg-white/90 p-5 shadow-lg shadow-slate-200/70">
             <nav className="space-y-6">
               {docSections.map(section => (

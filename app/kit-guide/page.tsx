@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { LanguageProvider, LanguageToggle, useLanguage } from './components/LanguageProvider';
 import PlanGenerator from './components/PlanGenerator';
 import PromptGenerator from './components/PromptGenerator';
+import SetupGuide from './components/SetupGuide';
 
 // Main content component that uses translations
 function KitGuideContent() {
@@ -800,6 +801,9 @@ function KitGuideContent() {
           </div>
         </div>
       </section>
+
+      {/* Setup Guide Section */}
+      <SetupGuide />
 
       {/* Quick Actions - Gradient Bento */}
       <section className="py-20 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 text-white">
