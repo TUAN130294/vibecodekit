@@ -15,6 +15,7 @@
 - DONE: REST bridge scaffolding Next.js ↔ Python worker
 - DONE: Docs hub blueprint + implementation (sidebar, TOC, FS markdown)
 - DONE: Sync kit-guide docs section with Docs Hub CTA + i18n labels
+- NOTE: Removed internal spec `docs/specs/docs-hub.md` from distribution
 - TODO: Testing
 - TODO: Deployment
 - BLOCKED: None noted (generic template)
