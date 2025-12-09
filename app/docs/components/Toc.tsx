@@ -9,7 +9,7 @@ export function Toc({ headings }: { headings: TocItem[] }) {
   if (!filtered.length) return null;
 
   return (
-    <div className="sticky top-10 rounded-xl border border-slate-200 bg-white/85 p-4 shadow-md shadow-slate-200/50">
+    <div className="sticky top-10 ml-6 rounded-xl border border-slate-200 bg-white/85 p-4 shadow-md shadow-slate-200/50 lg:ml-10">
       <div className="text-xs font-semibold uppercase tracking-wide text-slate-500">
         On this page
       </div>
