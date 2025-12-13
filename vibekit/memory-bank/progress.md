@@ -37,5 +37,11 @@
   - Added CORE BEHAVIORS section: Test-First Philosophy (TDD), Context Awareness, Colocated Testing
   - Added TESTING STANDARDS section: Coverage requirements, Test structure, Test types
   - Created `.cursorignore` to optimize token usage (excludes node_modules, dist, coverage, etc.)
+- DONE: Migrated tests to colocated structure (Colocated Testing)
+  - Moved `tests/unit/healthService.test.ts` → `src/features/shared/services/healthService.test.ts`
+  - Moved `tests/integration/healthRoute.test.ts` → `src/features/shared/routes/__tests__/healthRoute.test.ts`
+  - Updated `jest.config.js` to find tests in `src/` instead of `tests/`
+  - Removed empty `tests/` directory at root
+  - All tests now follow colocated pattern (next to source files)
 - Last Updated: 2025-12-10
 
