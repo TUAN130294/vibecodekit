@@ -23,5 +23,19 @@
 - DONE: Applied UI/UX Pro Max bento/light styling to Docs Hub (`app/docs/layout.tsx`, `app/docs/[[...slug]]/page.tsx`, `app/docs/components/Markdown.tsx`, `app/docs/components/Toc.tsx`)
 - INFO: Lightened code block background in Docs Markdown for readability (`app/docs/components/Markdown.tsx`)
 - DONE: Added section cards + soft UI headers for Docs content (`app/docs/[[...slug]]/page.tsx`, `app/docs/components/Markdown.tsx`)
+- DONE: Refactored project to Feature-Based Clean Architecture
+  - Created `src/features/` structure with: auth, tasks, reports, shared
+  - Moved all controllers, services, entities, routes to feature folders
+  - Updated all imports across project (dataSource, routes/index, test files)
+  - Removed old layer-based folders (controllers, services, entities - now empty)
+  - Structure: `src/features/[feature]/controllers|services|entities|routes/`
+- DONE: Created AI-Native documentation templates
+  - Created `.templates/docs/` with PRD.md, SCHEMA.md, TECH_SPECS.md templates
+  - Copied templates to `docs/` for immediate use in current project
+  - Templates include: Overview, Tech Stack, Architecture, Features, API Contracts, Database Schema, etc.
+- DONE: Updated `.cursorrules` with AI-Native standards
+  - Added CORE BEHAVIORS section: Test-First Philosophy (TDD), Context Awareness, Colocated Testing
+  - Added TESTING STANDARDS section: Coverage requirements, Test structure, Test types
+  - Created `.cursorignore` to optimize token usage (excludes node_modules, dist, coverage, etc.)
 - Last Updated: 2025-12-10
 

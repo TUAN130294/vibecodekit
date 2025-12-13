@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { ReportService } from '../services/reportService';
-import { APIError } from '../middleware/errorHandler';
+import { APIError } from '../../../middleware/errorHandler';
 
 export class ReportController {
     private service = new ReportService();
@@ -16,3 +16,4 @@ export class ReportController {
         }
     };
 }
+

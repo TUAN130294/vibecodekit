@@ -20,3 +20,4 @@ export class Report {
     @CreateDateColumn()
     generatedAt!: Date;
 }
+

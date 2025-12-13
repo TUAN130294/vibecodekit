@@ -1,4 +1,4 @@
-import { APIError } from '../middleware/errorHandler';
+import { APIError } from '../../../middleware/errorHandler';
 
 type EmailAdapter = 'sendgrid' | 'resend';
 

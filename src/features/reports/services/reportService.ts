@@ -1,5 +1,5 @@
-import { AppDataSource } from '../config/dataSource';
-import { Order, OrderStatus } from '../entities/Order';
+import { AppDataSource } from '../../../config/dataSource';
+import { Order, OrderStatus } from '../../shared/entities/Order';
 import { Report, ReportType } from '../entities/Report';
 import { Between } from 'typeorm';
 
@@ -46,3 +46,4 @@ export class ReportService {
         });
     }
 }
+

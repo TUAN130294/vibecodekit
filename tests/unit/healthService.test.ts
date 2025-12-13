@@ -1,4 +1,4 @@
-import { getHealth } from '../../src/services/healthService';
+import { getHealth } from '../../src/features/shared/services/healthService';
 
 describe('healthService', () => {
   it('returns ok status and uptime', () => {

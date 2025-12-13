@@ -1,6 +1,6 @@
 import Stripe from 'stripe';
-import { env } from '../config/env';
-import { APIError } from '../middleware/errorHandler';
+import { env } from '../../../config/env';
+import { APIError } from '../../../middleware/errorHandler';
 
 const stripe = env.jwtSecret // just to ensure env import used
   ? new Stripe(process.env.STRIPE_KEY || '', { apiVersion: '2023-10-16' })

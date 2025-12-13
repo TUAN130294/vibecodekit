@@ -1,6 +1,6 @@
-import { AppDataSource } from '../config/dataSource';
+import { AppDataSource } from '../../../config/dataSource';
 import { Task, TaskStatus } from '../entities/Task';
-import { User } from '../entities/User';
+import { User } from '../../shared/entities/User';
 
 export interface CreateTaskDto {
     title: string;
@@ -50,3 +50,4 @@ export class TaskService {
         return this.taskRepo.save(task);
     }
 }
+

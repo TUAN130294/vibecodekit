@@ -1,5 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn, Index } from 'typeorm';
-import { User } from './User';
+import { User } from '../../shared/entities/User';
 
 export enum TaskStatus {
     OPEN = 'open',
@@ -44,3 +44,4 @@ export class Task {
     @UpdateDateColumn()
     updatedAt!: Date;
 }
+

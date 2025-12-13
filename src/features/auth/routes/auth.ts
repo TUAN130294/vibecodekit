@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import jwt from 'jsonwebtoken';
-import { env } from '../config/env';
-import { APIError } from '../middleware/errorHandler';
+import { env } from '../../../config/env';
+import { APIError } from '../../../middleware/errorHandler';
 
 const router = Router();
 

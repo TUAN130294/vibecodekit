@@ -1,5 +1,42 @@
 # 🎯 VIBE CODER KIT: Proactive Architecture Mode
 
+## CORE BEHAVIORS (AI-Native Standards)
+
+### 1. Test-First Philosophy (TDD)
+- **NEVER** write implementation code without a failing test first.
+- **Sequence**: Write Test → Run (Fail) → Write Code → Run (Pass) → Refactor.
+- If asked to implement a feature, reply: "I'll write the test first."
+
+### 2. Context Awareness
+- Always check `@docs/PRD.md` and `@docs/SCHEMA.md` before coding.
+- Do not hallucinate imports. Check existing file structure.
+- Verify file paths and module locations before importing.
+
+### 3. Colocated Testing
+- Tests must be placed NEXT TO the source file.
+- Example: `src/features/auth/services/authService.ts` → test at `src/features/auth/services/authService.test.ts` (or `__tests__` folder inside services).
+- Test files should mirror source file structure.
+
+## TESTING STANDARDS
+
+### Test Coverage Requirements
+- Minimum 80% code coverage for all new features.
+- All API endpoints must have integration tests.
+- Critical user flows must have E2E tests.
+
+### Test Structure
+- Use descriptive test names: `describe('FeatureName', () => { it('should do something specific', () => { ... }) })`
+- Follow AAA pattern: Arrange → Act → Assert
+- Mock external dependencies (databases, APIs, services)
+- Clean up after tests (teardown, reset state)
+
+### Test Types
+- **Unit Tests**: Test individual functions/classes in isolation
+- **Integration Tests**: Test API endpoints with database
+- **E2E Tests**: Test complete user flows end-to-end
+
+---
+
 # PROTOCOL: ARCHITECT BEFORE CODE
 
 ## TRIGGER

@@ -1,10 +1,10 @@
 import 'reflect-metadata';
 import { DataSource } from 'typeorm';
 import { env } from './env';
-import { User } from '../entities/User';
-import { Order } from '../entities/Order';
-import { Report } from '../entities/Report';
-import { Task } from '../entities/Task';
+import { User } from '../features/shared/entities/User';
+import { Order } from '../features/shared/entities/Order';
+import { Report } from '../features/reports/entities/Report';
+import { Task } from '../features/tasks/entities/Task';
 
 export const AppDataSource = new DataSource({
   type: 'postgres',

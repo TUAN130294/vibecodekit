@@ -1,8 +1,8 @@
 import { Router } from 'express';
-import { healthCheck } from '../controllers/healthController';
-import authRouter from './auth';
-import reportRouter from './reports';
-import taskRouter from './tasks';
+import { healthCheck } from '../features/shared/controllers/healthController';
+import authRouter from '../features/auth/routes/auth';
+import reportRouter from '../features/reports/routes/reports';
+import taskRouter from '../features/tasks/routes/tasks';
 
 const router = Router();
 

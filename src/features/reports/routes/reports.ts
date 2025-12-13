@@ -7,3 +7,4 @@ const controller = new ReportController();
 router.get('/daily', controller.getDailyReport);
 
 export default router;
+
